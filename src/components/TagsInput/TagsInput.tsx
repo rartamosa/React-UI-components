@@ -1,0 +1,129 @@
+import React, { useState, useEffect, useRef } from "react";
+
+import { TagInputProps } from "./types";
+
+const TagInput = ({
+  tags,
+  onTagAdd,
+  // eslint-disable-next-line
+  tagsSuggestions,
+  onTagRemove,
+}: TagInputProps) => {
+  const [inputValue, setInputValue] = useState("");
+  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
+  const [internalTagsSuggestions, setInternalTagsSuggestions] = useState(
+    tagsSuggestions.filter((tag) => !tags.includes(tag._id))
+  );
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.scrollIntoView({ inline: "end" });
+  }, [tags]);
+
+  useEffect(() => {
+    const clickHandler = () => setIsSuggestionsOpen(false);
+    window.addEventListener("click", clickHandler);
+
+    return () => window.removeEventListener("click", clickHandler);
+  }, []);
+
+  const inputFocus = () => {
+    inputRef.current?.focus();
+  };
+
+  const onFormSubmit = (event: React.KeyboardEvent): void => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.stopPropagation();
+      const matchingTag = tagsSuggestions.find(
+        (tag) => tag.name === inputValue
+      );
+      const existingTag = tags.find((tag) => tag === matchingTag?._id);
+      if (matchingTag && !existingTag) {
+        onTagAdd(matchingTag._id);
+        setInternalTagsSuggestions(
+          internalTagsSuggestions.filter((tag) => tag._id !== matchingTag._id)
+        );
+      }
+      setInputValue("");
+    }
+  };
+
+  const handleTagAdd = (tagToAddID: string): void => {
+    onTagAdd(tagToAddID);
+    setInternalTagsSuggestions(
+      internalTagsSuggestions.filter((tag) => tag._id !== tagToAddID)
+    );
+    setInputValue("");
+    inputFocus();
+  };
+
+  const handleTagRemove = (tagToRemoveID: string): void => {
+    onTagRemove(tagToRemoveID);
+    const removedTag = tagsSuggestions.find((tag) => tag._id === tagToRemoveID);
+    if (removedTag) {
+      setInternalTagsSuggestions([...internalTagsSuggestions, removedTag]);
+    }
+    inputFocus();
+  };
+
+  return (
+    <div className="tags-input__wrapper">
+      <div className="tags-input__container">
+        {tags.map((tagID) => {
+          const currentTag = tagsSuggestions.find(
+            (tagToShow) => tagToShow._id === tagID
+          );
+          return (
+            <span
+              className="tags-input__container_single-tag"
+              style={{ backgroundColor: currentTag?.color }}
+              key={tagID}
+            >
+              {currentTag?.name}
+              <span
+                className="tags-input__container_single-tag-close"
+                onClick={() => handleTagRemove(tagID)}
+              >
+                &times;
+              </span>
+            </span>
+          );
+        })}
+        <input
+          className="tags-input__container_input"
+          value={inputValue}
+          placeholder="Type..."
+          ref={inputRef}
+          onChange={(event) => setInputValue(event.target.value)}
+          onClick={(event) => {
+            setIsSuggestionsOpen(true);
+            event.stopPropagation();
+          }}
+          onKeyPress={onFormSubmit}
+        />
+        {isSuggestionsOpen && internalTagsSuggestions.length > 0 && (
+          <div className="tags-input__container_suggestions">
+            {internalTagsSuggestions
+              .filter((tag) =>
+                tag.name.toLowerCase().startsWith(inputValue.toLowerCase())
+              )
+              .map((tag) => (
+                <span
+                  className="tags-input__container_single-tag"
+                  style={{ backgroundColor: tag.color }}
+                  key={tag._id}
+                  onClick={() => handleTagAdd(tag._id)}
+                >
+                  {tag.name}
+                </span>
+              ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default TagInput;

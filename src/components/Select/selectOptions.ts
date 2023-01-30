@@ -1,4 +1,6 @@
+// @ts-ignore
 import uniqid from "uniqid";
+
 const selectOptions = [
   {
     id: uniqid(),
