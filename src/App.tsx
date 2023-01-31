@@ -14,6 +14,8 @@ const App = () => {
         onTagRemove={(tagToRemove) =>
           setTags(tags.filter((tag) => tag !== tagToRemove))
         }
+        // containerBorderColor="red"
+        // containerBorderWidth="5px"
       />
     </>
   );

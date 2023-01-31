@@ -5,9 +5,11 @@ type TagSuggestion = {
 };
 
 export type TagInputProps = {
-  tags: string[]; //v1
-  // tags: Array<{ _id: string }>; //v2
+  tags: string[];
   onTagAdd: (tag: string) => void;
   tagsSuggestions: TagSuggestion[];
   onTagRemove: (tag: string) => void;
+  containerBorderColor?: string;
+  containerBorderWidth?: string;
+  //   sx?:
 };

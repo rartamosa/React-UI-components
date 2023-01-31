@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import styled, { css } from "styled-components";
 
 import { TagInputProps } from "./types";
 
@@ -8,6 +9,8 @@ const TagInput = ({
   // eslint-disable-next-line
   tagsSuggestions,
   onTagRemove,
+  containerBorderColor,
+  containerBorderWidth,
 }: TagInputProps) => {
   const [inputValue, setInputValue] = useState("");
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
@@ -69,30 +72,30 @@ const TagInput = ({
   };
 
   return (
-    <div className="tags-input__wrapper">
-      <div className="tags-input__container">
+    <div>
+      <TagsInputContainer
+        containerBorderColor={containerBorderColor}
+        containerBorderWidth={containerBorderWidth}
+      >
         {tags.map((tagID) => {
           const currentTag = tagsSuggestions.find(
             (tagToShow) => tagToShow._id === tagID
           );
           return (
-            <span
-              className="tags-input__container_single-tag"
+            <TagsInputContainerSingleTag
               style={{ backgroundColor: currentTag?.color }}
               key={tagID}
             >
               {currentTag?.name}
-              <span
-                className="tags-input__container_single-tag-close"
+              <TagsInputContainerSingleTagClose
                 onClick={() => handleTagRemove(tagID)}
               >
                 &times;
-              </span>
-            </span>
+              </TagsInputContainerSingleTagClose>
+            </TagsInputContainerSingleTag>
           );
         })}
-        <input
-          className="tags-input__container_input"
+        <TagsInputContainerInput
           value={inputValue}
           placeholder="Type..."
           ref={inputRef}
@@ -104,26 +107,94 @@ const TagInput = ({
           onKeyPress={onFormSubmit}
         />
         {isSuggestionsOpen && internalTagsSuggestions.length > 0 && (
-          <div className="tags-input__container_suggestions">
+          <TagsInputContainerSuggestions>
             {internalTagsSuggestions
               .filter((tag) =>
                 tag.name.toLowerCase().startsWith(inputValue.toLowerCase())
               )
               .map((tag) => (
-                <span
-                  className="tags-input__container_single-tag"
+                <TagsInputContainerSingleTag
                   style={{ backgroundColor: tag.color }}
                   key={tag._id}
                   onClick={() => handleTagAdd(tag._id)}
                 >
                   {tag.name}
-                </span>
+                </TagsInputContainerSingleTag>
               ))}
-          </div>
+          </TagsInputContainerSuggestions>
         )}
-      </div>
+      </TagsInputContainer>
     </div>
   );
 };
 
 export default TagInput;
+
+export const TagsInputContainer = styled.div<{
+  containerBorderColor?: string;
+  containerBorderWidth?: string;
+}>`
+  width: 300px;
+  height: 44px;
+  background-color: #fff;
+  border: 1px solid var(--font-color);
+  border-radius: 8px;
+  padding: 8px;
+  font-family: "Karla";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.02em;
+  box-sizing: border-box;
+  display: flex;
+  gap: 8px;
+  overflow-y: scroll;
+  border: ${(props) => props.containerBorderWidth || "1px"} solid
+    ${(props) => props.containerBorderColor || "#000"};
+`;
+
+export const TagsInputContainerSingleTag = styled.span`
+  font-family: "Red Hat Display";
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  text-transform: capitalize;
+  white-space: nowrap;
+`;
+export const TagsInputContainerSingleTagClose = styled.span`
+  font-size: 21px;
+  justify-self: flex-end;
+  align-self: self-end;
+  cursor: pointer;
+`;
+export const TagsInputContainerInput = styled.input`
+  font-family: "Red Hat Display";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.02em;
+  border: none;
+  outline: none;
+  max-width: 100%;
+  min-width: 15%;
+`;
+export const TagsInputContainerSuggestions = styled.div`
+  position: absolute;
+  top: 21px;
+  left: 1px;
+  background-color: var(--light-background-color);
+  width: 300px;
+  padding: 15px 8px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid var(--font-color);
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 100px;
+  overflow-x: auto;
+`;
