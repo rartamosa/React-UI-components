@@ -16,6 +16,15 @@ const App = () => {
         }
         // containerBorderColor="red"
         // containerBorderWidth="5px"
+        // tagsSuggestionsBorderColor="red"
+        // tagsSuggestionsBorderWidth="5px"
+        // size="large"
+        // backgroundColor="black"
+        // placeholder="Dupa"
+        // tagsFontColor="blue"
+        // errorBorderColor="red"
+        // isDisabled={true}
+        // tagsSuggestionsContainerPosition="right"
       />
     </>
   );
