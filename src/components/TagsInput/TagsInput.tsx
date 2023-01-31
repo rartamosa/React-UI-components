@@ -96,6 +96,7 @@ const TagInput = ({
         containerBorderWidth={containerBorderWidth}
         size={size}
         backgroundColor={backgroundColor}
+        isDisabled={isDisabled || false}
       >
         {tags.map((tagID) => {
           const currentTag = tagsSuggestions.find(
@@ -170,6 +171,7 @@ export const TagsInputContainer = styled.div<{
   containerBorderWidth?: string;
   size?: "small" | "medium" | "large"; // "md" is the default size
   backgroundColor?: string;
+  isDisabled?: boolean;
 }>`
   width: 300px;
   height: 44px;
@@ -193,10 +195,14 @@ export const TagsInputContainer = styled.div<{
       padding: 12px;
       gap: 12px;
       font-size: 21px;
+    `}
+  ${(props) =>
+    props.isDisabled &&
+    css`
+      background-color: #c8c8c8 !important;
     `}  
   background-color: ${(props) => props.backgroundColor || "#fff"};
   border-radius: 8px;
-  font-family: "Karla";
   font-weight: 700;
   line-height: 16px;
   letter-spacing: -0.02em;
@@ -204,7 +210,7 @@ export const TagsInputContainer = styled.div<{
   display: flex;
   overflow-y: scroll;
   border: ${(props) => props.containerBorderWidth || "1px"} solid
-    ${(props) => props.containerBorderColor || "#000"};
+    ${(props) => props.containerBorderColor || "#333"};
 `;
 
 export const ErrorInputContainer = styled.div<{
@@ -236,7 +242,7 @@ export const ErrorInputContainer = styled.div<{
       font-size: 21px;
     `}  
   border: ${(props) => props.containerBorderWidth || "1px"} solid
-    ${(props) => props.errorBorderColor || "#000"};
+    ${(props) => props.errorBorderColor || "#333"};
   z-index: 1;
   position: absolute;
   border-radius: 8px;
@@ -261,7 +267,6 @@ export const TagsInputContainerSingleTag = styled.span<{
       padding: 9px 18px;
       gap: 6px;
     `}
-  font-family: "Red Hat Display";
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -314,13 +319,15 @@ export const TagsInputContainerInput = styled.input<{
       line-height: 24px;
       letter-spacing: -0.01em;
     `}
-  font-family: "Red Hat Display";
   font-weight: 700;
   border: none;
   outline: none;
   max-width: 100%;
   min-width: 15%;
   background-color: ${(props) => props.backgroundColor || "#fff"};
+  &:disabled {
+    background-color: #c8c8c8;
+  }
 `;
 
 export const TagsInputContainerSuggestions = styled.div<{
@@ -416,10 +423,12 @@ export const TagsInputContainerSuggestions = styled.div<{
   box-sizing: border-box;
   border-radius: 8px;
   border: ${(props) => props.tagsSuggestionsBorderWidth || "1px"} solid
-    ${(props) => props.tagsSuggestionsBorderColor || "#000"};
+    ${(props) => props.tagsSuggestionsBorderColor || "#333"};
   z-index: 1;
   display: flex;
   flex-wrap: wrap;
   overflow-x: auto;
   background-color: ${(props) => props.backgroundColor || "#fff"};
 `;
+
+//TODO ${props => ({...props.sx})}

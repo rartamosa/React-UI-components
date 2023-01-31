@@ -24,7 +24,7 @@ const App = () => {
         // tagsFontColor="blue"
         // errorBorderColor="red"
         // isDisabled={true}
-        // tagsSuggestionsContainerPosition="right"
+        // tagsSuggestionsContainerPosition="top"
       />
     </>
   );
