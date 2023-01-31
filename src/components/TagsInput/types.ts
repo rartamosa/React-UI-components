@@ -4,9 +4,6 @@ type TagSuggestion = {
   color: string;
 };
 
-export type HorizontalPosition = "left" | "center" | "right";
-export type VerticalPosition = "top" | "center" | "bottom";
-
 export type TagInputProps = {
   tags: string[];
   onTagAdd: (tag: string) => void;

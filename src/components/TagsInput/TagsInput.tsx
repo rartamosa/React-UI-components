@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
-import { TagInputProps, HorizontalPosition, VerticalPosition } from "./types";
+import { TagInputProps } from "./types";
 
 import { MAIN_DARK_FONT_COLOR } from "../../utils/commons";
 
