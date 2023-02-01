@@ -25,6 +25,7 @@ const App = () => {
         // errorBorderColor="red"
         // isDisabled={true}
         // tagsSuggestionsContainerPosition="top"
+        // inputSx={{ backgroundColor: "red", color: "black", fhdsjfhdja: "fhdsjkfs" }}
       />
     </>
   );

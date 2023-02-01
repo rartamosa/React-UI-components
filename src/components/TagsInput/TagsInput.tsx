@@ -298,7 +298,7 @@ export const TagsInputContainerSingleTagClose = styled.span<{
 `;
 
 export const TagsInputContainerInput = styled.input<{
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | undefined;
   backgroundColor?: string;
   isDisabled?: boolean;
 }>`
@@ -329,6 +329,9 @@ export const TagsInputContainerInput = styled.input<{
     background-color: #c8c8c8;
   }
 `;
+// ${(props) => props.inputSx && css`
+// ${props.inputSx}
+// `}
 
 export const TagsInputContainerSuggestions = styled.div<{
   size?: "small" | "medium" | "large";
