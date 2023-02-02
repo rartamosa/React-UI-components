@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
 
-import { MAIN_DARK_FONT_COLOR } from "../../utils/commons";
-
 const BasicContainerError = styled.div<{
   errorBorderColor?: string;
   containerBorderWidth?: string;
@@ -31,7 +29,7 @@ const BasicContainerError = styled.div<{
       font-size: 21px;
     `}  
     border: ${(props) => props.containerBorderWidth || "1px"} solid
-      ${(props) => props.errorBorderColor || MAIN_DARK_FONT_COLOR};
+      ${(props) => props.errorBorderColor || "red"};
   z-index: 1;
   position: absolute;
   border-radius: 8px;

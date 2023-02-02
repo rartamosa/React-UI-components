@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import {
+  faChevronDown,
+  faChevronUp,
+  faChevronLeft,
+  faChevronRight,
+  fas,
+} from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { SelectProps, SelectOption } from "./selectTypes";
 
@@ -7,6 +16,9 @@ import BasicContainer from "../Basic Components/BasicContainer";
 import BasicInput from "../Basic Components/BasicInput";
 import BasicContainerError from "../Basic Components/BasicContainerError";
 import BasicCloseButton from "../Basic Components/BasicCloseButton";
+import { MAIN_DARK_FONT_COLOR } from "../../utils/commons";
+
+library.add(fas, faChevronDown, faChevronUp, faChevronLeft, faChevronRight);
 
 const Select = ({
   selectOptions,
@@ -19,6 +31,8 @@ const Select = ({
   isDisabled,
   errorBorderColor,
   optionsContainerPosition,
+  iconColor,
+  customIcon,
 }: SelectProps) => {
   const [selectedOption, setSelectedOption] = useState({ id: "", name: "" });
   const [selectedOptionDraft, setSelectedOptionDraft] = useState({
@@ -31,7 +45,6 @@ const Select = ({
   useEffect(() => {
     const onWindowClick = () => setAreSelectOptionsOpen(false);
     window.addEventListener("click", onWindowClick);
-
     return () => window.removeEventListener("click", onWindowClick);
   }, []);
 
@@ -41,12 +54,15 @@ const Select = ({
     setAreSelectOptionsOpen(false);
   };
 
-  const onSelectClear = (): void => {
+  const onSelectClear = (event: React.SyntheticEvent): void => {
+    event.stopPropagation();
     const emptyOption = { id: "", name: "" };
     setSelectedOption(emptyOption);
     setSelectedOptionDraft(emptyOption);
     if (shouldCloseOnClear) {
       setAreSelectOptionsOpen(false);
+    } else {
+      setAreSelectOptionsOpen(true);
     }
   };
 
@@ -78,9 +94,7 @@ const Select = ({
     setSelectedOptionDraft(newOptionDraft);
   };
 
-  const onSelectOptionsOpen = (
-    event: React.SyntheticEvent<HTMLInputElement>
-  ): void => {
+  const onSelectOptionsOpen = (event: React.SyntheticEvent): void => {
     event.stopPropagation();
     setAreSelectOptionsOpen(true);
   };
@@ -100,6 +114,7 @@ const Select = ({
         componentSize={componentSize}
         backgroundColor={backgroundColor}
         isDisabled={isDisabled}
+        style={{ justifyContent: "space-between" }}
       >
         <SelectedOption backgroundColor={backgroundColor}>
           <BasicInput
@@ -116,6 +131,39 @@ const Select = ({
             <BasicCloseButton onClick={onSelectClear}>&times;</BasicCloseButton>
           )}
         </SelectedOption>
+
+        {optionsContainerPosition === undefined && (
+          <FontAwesomeIcon
+            icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-down"]}
+            color={iconColor || MAIN_DARK_FONT_COLOR}
+            onClick={onSelectOptionsOpen}
+          />
+        )}
+
+        {optionsContainerPosition === "top" && (
+          <FontAwesomeIcon
+            icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-up"]}
+            color={iconColor || MAIN_DARK_FONT_COLOR}
+            onClick={onSelectOptionsOpen}
+          />
+        )}
+
+        {optionsContainerPosition === "left" && (
+          <FontAwesomeIcon
+            icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-left"]}
+            color={iconColor || MAIN_DARK_FONT_COLOR}
+            onClick={onSelectOptionsOpen}
+          />
+        )}
+
+        {optionsContainerPosition === "right" && (
+          <FontAwesomeIcon
+            icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-right"]}
+            color={iconColor || MAIN_DARK_FONT_COLOR}
+            onClick={onSelectOptionsOpen}
+          />
+        )}
+
         {areSelectOptionsOpen && (
           <Options
             backgroundColor={backgroundColor}
@@ -151,10 +199,10 @@ export const SelectedOption = styled.div<{
 }>`
   height: 20px;
   margin-bottom: -1px;
-  width: 200px;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   background-color: ${(props) => props.backgroundColor || "#fff"};
+  border: none;
 `;
 
 export const Options = styled.ul<{

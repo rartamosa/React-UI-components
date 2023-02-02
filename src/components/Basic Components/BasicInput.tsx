@@ -25,7 +25,6 @@ const BasicInput = styled.input<{
     font-weight: 700;
   border: none;
   outline: none;
-  max-width: 100%;
   min-width: 15%;
   background-color: ${(props) => props.backgroundColor || "#fff"};
   &:disabled {

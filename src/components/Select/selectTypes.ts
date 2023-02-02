@@ -1,3 +1,5 @@
+import { IconName } from "@fortawesome/fontawesome-svg-core";
+
 export type SelectOption = {
   id: string;
   name: string;
@@ -14,4 +16,6 @@ export type SelectProps = {
   isDisabled?: boolean;
   errorBorderColor?: string;
   optionsContainerPosition?: "left" | "top" | "right" | "bottom";
+  iconColor?: string;
+  customIcon?: IconName;
 };

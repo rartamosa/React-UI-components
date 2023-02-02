@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
+
 import TagInput from "./components/TagsInput/TagsInput";
 import { tagsDummyData } from "./components/TagsInput/tagsDummyData";
 
@@ -24,7 +26,7 @@ const App = () => {
       <Select
         selectOptions={selectDummyData}
         // placeholder="Dupa"
-        shouldCloseOnClear={true}
+        shouldCloseOnClear={false}
         // containerBorderColor="red"
         // containerBorderWidth="5px"
         // componentSize="large"
@@ -33,6 +35,11 @@ const App = () => {
         // errorBorderColor="red"
         // componentSize="small"
         // optionsContainerPosition="right"
+        // iconColor="red"
+        // backgroundColor="pink"
+        // isDisabled={true}
+        // customIcon="circle-chevron-down"
+        // errorBorderColor="green"
       />
     </>
   );

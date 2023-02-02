@@ -4,7 +4,6 @@ const BasicCloseButton = styled.span<{
   componentSize?: "small" | "medium" | "large";
 }>`
   font-size: 21px;
-  align-self: self-end;
   align-self: center;
   ${(props) =>
     props.componentSize === "small" &&
