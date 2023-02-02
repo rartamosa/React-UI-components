@@ -11,7 +11,7 @@ export type TagInputProps = {
   onTagRemove: (tag: string) => void;
   containerBorderColor?: string;
   containerBorderWidth?: string;
-  size?: "small" | "medium" | "large";
+  componentSize?: "small" | "medium" | "large";
   tagsSuggestionsBorderColor?: string;
   tagsSuggestionsBorderWidth?: string;
   backgroundColor?: string;
@@ -20,6 +20,4 @@ export type TagInputProps = {
   errorBorderColor?: string;
   isDisabled?: boolean;
   tagsSuggestionsContainerPosition?: "left" | "top" | "right" | "bottom";
-
-  //   sx?:
 };

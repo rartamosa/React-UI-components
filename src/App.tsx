@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import TagInput from "./components/TagsInput/TagsInput";
 import { tagsDummyData } from "./components/TagsInput/tagsDummyData";
 
+import Select from "./components/Select/Select";
+import selectDummyData from "./components/Select/selectDummyData";
+
 const App = () => {
   const [tags, setTags] = useState<string[]>([]);
   return (
@@ -14,18 +17,22 @@ const App = () => {
         onTagRemove={(tagToRemove) =>
           setTags(tags.filter((tag) => tag !== tagToRemove))
         }
+        // componentSize="large"
+        // containerBorderWidth="5px"
+      />
+
+      <Select
+        selectOptions={selectDummyData}
+        // placeholder="Dupa"
+        shouldCloseOnClear={true}
         // containerBorderColor="red"
         // containerBorderWidth="5px"
-        // tagsSuggestionsBorderColor="red"
-        // tagsSuggestionsBorderWidth="5px"
-        // size="large"
-        // backgroundColor="black"
-        // placeholder="Dupa"
-        // tagsFontColor="blue"
-        // errorBorderColor="red"
+        // componentSize="large"
+        // backgroundColor="pink"
         // isDisabled={true}
-        // tagsSuggestionsContainerPosition="top"
-        // inputSx={{ backgroundColor: "red", color: "black", fhdsjfhdja: "fhdsjkfs" }}
+        // errorBorderColor="red"
+        // componentSize="small"
+        // optionsContainerPosition="right"
       />
     </>
   );

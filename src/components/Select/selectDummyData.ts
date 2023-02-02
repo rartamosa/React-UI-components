@@ -1,7 +1,7 @@
 // @ts-ignore
 import uniqid from "uniqid";
 
-const selectOptions = [
+const selectDummyData = [
   {
     id: uniqid(),
     name: "Harry Potter",
@@ -24,4 +24,4 @@ const selectOptions = [
   },
 ];
 
-export default selectOptions;
+export default selectDummyData;
