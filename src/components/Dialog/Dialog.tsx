@@ -20,7 +20,9 @@ const Dialog = ({
   cancelButtonText,
   overlayColor,
   dialogPosition,
-  blockScroll,
+  blockScroll, //TODO
+  closeOnEsc, //TODO
+  closeOnOverlayClick,
 }: DialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -28,21 +30,29 @@ const Dialog = ({
     setIsDialogOpen(true);
   };
 
-  const onClose = (): void => {
-    setIsDialogOpen(false);
-  };
-
   const onInternalAction = (): void => {
-    onClose();
+    setIsDialogOpen(false);
     onAction();
   };
 
   const onInternalCancel = (): void => {
     if (onCancel) {
-      onClose();
+      setIsDialogOpen(false);
       onCancel();
     } else {
-      onClose();
+      setIsDialogOpen(false);
+    }
+  };
+
+  const onEscClose = (event: React.KeyboardEvent): void => {
+    if (closeOnEsc && event.key === "Escape") {
+      onInternalCancel();
+    }
+  };
+
+  const onOverlayClickClose = (): void => {
+    if (closeOnOverlayClick) {
+      onInternalCancel();
     }
   };
 
@@ -57,13 +67,17 @@ const Dialog = ({
       </DialogButton>
 
       {isDialogOpen && (
-        <AlertDialog isDialogOpen={isDialogOpen} onClose={onClose}>
+        <AlertDialog isDialogOpen={isDialogOpen} onEscClose={onEscClose}>
           <AlertDialogOverLay
             overlayColor={overlayColor}
             dialogPosition={dialogPosition}
             blockScroll={blockScroll}
+            closeOnEsc={closeOnEsc}
+            onKeyDown={onEscClose}
+            closeOnOverlayClick={closeOnOverlayClick}
+            onClick={onOverlayClickClose}
           >
-            <AlertDialogWindow>
+            <AlertDialogWindow onClick={(event) => event.stopPropagation()}>
               <AlertDialogHeader dialogHeader={dialogHeader}>
                 {dialogHeader}
               </AlertDialogHeader>
@@ -138,10 +152,8 @@ export const CancelButton = styled(DialogButton)<{
 
 export const AlertDialog = styled.div<{
   isDialogOpen: boolean;
-  onClose: () => void;
-}>`
-  border: 1px solid black;
-`;
+  onEscClose: (event: React.KeyboardEvent) => void;
+}>``;
 
 export const AlertDialogOverLay = styled.div<{
   overlayColor?: string;
@@ -149,6 +161,8 @@ export const AlertDialogOverLay = styled.div<{
     | Exclude<`${HorizontalPosition}-${VerticalPosition}`, "center-center">
     | "center";
   blockScroll?: boolean;
+  closeOnEsc?: boolean;
+  closeOnOverlayClick?: boolean;
 }>`
   position: absolute;
   left: 0;
