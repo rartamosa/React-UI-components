@@ -7,15 +7,14 @@ export type SelectOption = {
 
 export type SelectProps = {
   selectOptions: SelectOption[];
-  placeholder?: string;
   shouldCloseOnClear: boolean;
+  placeholder?: string;
   containerBorderColor?: string;
   containerBorderWidth?: string;
   componentSize?: "small" | "medium" | "large";
   backgroundColor?: string;
   isDisabled?: boolean;
   errorBorderColor?: string;
-  optionsContainerPosition?: "left" | "top" | "right" | "bottom";
   iconColor?: string;
   customIcon?: IconName;
 };

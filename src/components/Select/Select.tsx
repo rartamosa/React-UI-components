@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import {
-  faChevronDown,
-  faChevronUp,
-  faChevronLeft,
-  faChevronRight,
-  fas,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -18,19 +12,18 @@ import BasicContainerError from "../Basic Components/BasicContainerError";
 import BasicCloseButton from "../Basic Components/BasicCloseButton";
 import { MAIN_DARK_FONT_COLOR } from "../../utils/commons";
 
-library.add(fas, faChevronDown, faChevronUp, faChevronLeft, faChevronRight);
+library.add(fas, faChevronDown);
 
 const Select = ({
   selectOptions,
-  placeholder,
   shouldCloseOnClear,
+  placeholder,
   containerBorderColor,
   containerBorderWidth,
   componentSize,
   backgroundColor,
   isDisabled,
   errorBorderColor,
-  optionsContainerPosition,
   iconColor,
   customIcon,
 }: SelectProps) => {
@@ -96,7 +89,11 @@ const Select = ({
 
   const onSelectOptionsOpen = (event: React.SyntheticEvent): void => {
     event.stopPropagation();
-    setAreSelectOptionsOpen(true);
+    if (isDisabled) {
+      setAreSelectOptionsOpen(false);
+    } else {
+      setAreSelectOptionsOpen(true);
+    }
   };
 
   return (
@@ -116,7 +113,9 @@ const Select = ({
         isDisabled={isDisabled}
         style={{ justifyContent: "space-between" }}
       >
-        <SelectedOption backgroundColor={backgroundColor}>
+        <SelectedOption
+          backgroundColor={isDisabled ? "#c8c8c8" : backgroundColor}
+        >
           <BasicInput
             value={selectedOptionDraft.name}
             onKeyUp={onOptionDraftSubmit}
@@ -128,47 +127,26 @@ const Select = ({
             disabled={isDisabled}
           />
           {selectedOption.name && (
-            <BasicCloseButton onClick={onSelectClear}>&times;</BasicCloseButton>
+            <BasicCloseButton
+              onClick={onSelectClear}
+              componentSize={componentSize}
+            >
+              &times;
+            </BasicCloseButton>
           )}
         </SelectedOption>
 
-        {optionsContainerPosition === undefined && (
-          <FontAwesomeIcon
-            icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-down"]}
-            color={iconColor || MAIN_DARK_FONT_COLOR}
-            onClick={onSelectOptionsOpen}
-          />
-        )}
-
-        {optionsContainerPosition === "top" && (
-          <FontAwesomeIcon
-            icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-up"]}
-            color={iconColor || MAIN_DARK_FONT_COLOR}
-            onClick={onSelectOptionsOpen}
-          />
-        )}
-
-        {optionsContainerPosition === "left" && (
-          <FontAwesomeIcon
-            icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-left"]}
-            color={iconColor || MAIN_DARK_FONT_COLOR}
-            onClick={onSelectOptionsOpen}
-          />
-        )}
-
-        {optionsContainerPosition === "right" && (
-          <FontAwesomeIcon
-            icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-right"]}
-            color={iconColor || MAIN_DARK_FONT_COLOR}
-            onClick={onSelectOptionsOpen}
-          />
-        )}
+        <FontAwesomeIcon
+          icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-down"]}
+          color={iconColor || MAIN_DARK_FONT_COLOR}
+          onClick={onSelectOptionsOpen}
+          style={{ cursor: "pointer" }}
+        />
 
         {areSelectOptionsOpen && (
           <Options
             backgroundColor={backgroundColor}
             componentSize={componentSize}
-            optionsContainerPosition={optionsContainerPosition}
           >
             {selectOptions
               .filter((option) =>
@@ -190,10 +168,6 @@ const Select = ({
 
 export default Select;
 
-// ${(props) => props.inputSx && css`
-// ${props.inputSx}
-// `}
-
 export const SelectedOption = styled.div<{
   backgroundColor?: string;
 }>`
@@ -203,12 +177,12 @@ export const SelectedOption = styled.div<{
   align-items: center;
   background-color: ${(props) => props.backgroundColor || "#fff"};
   border: none;
+  flex-grow: 1;
 `;
 
 export const Options = styled.ul<{
   backgroundColor?: string;
   componentSize?: "small" | "medium" | "large";
-  optionsContainerPosition?: "left" | "top" | "right" | "bottom";
 }>`
   padding: 10px;
   left: 0;
@@ -229,63 +203,6 @@ export const Options = styled.ul<{
       padding: 15px;
       max-height: 157px;
       min-height: 157px;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "top" &&
-    css`
-      top: -101px;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "top" &&
-    props.componentSize === "small" &&
-    css`
-      top: -66px;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "top" &&
-    props.componentSize === "large" &&
-    css`
-      top: -156px;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "right" &&
-    css`
-      left: 299px;
-      top: -50%;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "right" &&
-    props.componentSize === "small" &&
-    css`
-      left: 149px;
-      top: -100%;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "right" &&
-    props.componentSize === "large" &&
-    css`
-      left: 449px;
-      top: -75%;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "left" &&
-    css`
-      left: -299px;
-      top: -50%;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "left" &&
-    props.componentSize === "small" &&
-    css`
-      left: -149px;
-      top: -100%;
-    `}
-    ${(props) =>
-    props.optionsContainerPosition === "left" &&
-    props.componentSize === "large" &&
-    css`
-      left: -449px;
-      top: -75%;
     `}
   overflow-x: auto;
   width: inherit;
