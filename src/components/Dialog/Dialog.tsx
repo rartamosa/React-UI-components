@@ -21,7 +21,7 @@ const Dialog = ({
   overlayColor,
   dialogPosition,
   blockScroll,
-  closeOnEsc, //TODO
+  closeOnEsc,
   closeOnOverlayClick,
 }: DialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -35,14 +35,19 @@ const Dialog = ({
     }
   }, [isDialogOpen]);
 
+  useEffect(() => {
+    const onEscClose = (event: KeyboardEvent): void => {
+      if (closeOnEsc && event.key === "Escape") {
+        onInternalCancel();
+      }
+    };
+    window.addEventListener("keydown", onEscClose);
+
+    return () => window.removeEventListener("keydown", onEscClose);
+  }, []);
+
   const onOpen = (): void => {
     setIsDialogOpen(true);
-    // if (blockScroll && isDialogOpen) {
-    //   setOnBlockScroll(true);
-    //   document.body.style.overflow = "hidden";
-    // } else {
-    //   document.body.style.overflow = "scroll";
-    // }
   };
 
   const onInternalAction = (): void => {
@@ -54,16 +59,8 @@ const Dialog = ({
     if (onCancel) {
       setIsDialogOpen(false);
       onCancel();
-      //   setOnBlockScroll(false);
     } else {
       setIsDialogOpen(false);
-      //   setOnBlockScroll(false);
-    }
-  };
-
-  const onEscClose = (event: React.KeyboardEvent): void => {
-    if (closeOnEsc && event.key === "Escape") {
-      onInternalCancel();
     }
   };
 
@@ -84,46 +81,44 @@ const Dialog = ({
       </DialogButton>
 
       {isDialogOpen && (
-        <AlertDialog isDialogOpen={isDialogOpen} onEscClose={onEscClose}>
-          <AlertDialogOverLay
-            overlayColor={overlayColor}
-            dialogPosition={dialogPosition}
-            blockScroll={blockScroll}
-            closeOnEsc={closeOnEsc}
-            onKeyDown={onEscClose}
-            closeOnOverlayClick={closeOnOverlayClick}
-            onClick={onOverlayClickClose}
-          >
-            <AlertDialogWindow onClick={(event) => event.stopPropagation()}>
-              <AlertDialogHeader dialogHeader={dialogHeader}>
-                {dialogHeader}
-              </AlertDialogHeader>
-              <AlertDialogBody dialogBody={dialogBody}>
-                {dialogBody}
-              </AlertDialogBody>
-              <AlertDialogFooter>
-                <CancelButton
-                  onClick={onInternalCancel}
-                  buttonProps={buttonProps}
-                  cancelButtonColor={cancelButtonColor}
-                  dialogButtonText={dialogButtonText}
-                  cancelButtonText={cancelButtonText}
-                >
-                  {cancelButtonText}
-                </CancelButton>
-                <ActionButton
-                  onClick={onInternalAction}
-                  buttonProps={buttonProps}
-                  actionButtonColor={actionButtonColor}
-                  dialogButtonText={dialogButtonText}
-                  actionButtonText={actionButtonText}
-                >
-                  {actionButtonText}
-                </ActionButton>
-              </AlertDialogFooter>
-            </AlertDialogWindow>
-          </AlertDialogOverLay>
-        </AlertDialog>
+        <AlertDialogOverLay
+          overlayColor={overlayColor}
+          dialogPosition={dialogPosition}
+          blockScroll={blockScroll}
+          closeOnEsc={closeOnEsc}
+          closeOnOverlayClick={closeOnOverlayClick}
+          onClick={onOverlayClickClose}
+          isDialogOpen={isDialogOpen}
+        >
+          <AlertDialogWindow onClick={(event) => event.stopPropagation()}>
+            <AlertDialogHeader dialogHeader={dialogHeader}>
+              {dialogHeader}
+            </AlertDialogHeader>
+            <AlertDialogBody dialogBody={dialogBody}>
+              {dialogBody}
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <CancelButton
+                onClick={onInternalCancel}
+                buttonProps={buttonProps}
+                cancelButtonColor={cancelButtonColor}
+                dialogButtonText={dialogButtonText}
+                cancelButtonText={cancelButtonText}
+              >
+                {cancelButtonText}
+              </CancelButton>
+              <ActionButton
+                onClick={onInternalAction}
+                buttonProps={buttonProps}
+                actionButtonColor={actionButtonColor}
+                dialogButtonText={dialogButtonText}
+                actionButtonText={actionButtonText}
+              >
+                {actionButtonText}
+              </ActionButton>
+            </AlertDialogFooter>
+          </AlertDialogWindow>
+        </AlertDialogOverLay>
       )}
     </>
   );
@@ -167,11 +162,6 @@ export const CancelButton = styled(DialogButton)<{
       : props.buttonProps?.backgroundColor};
 `;
 
-export const AlertDialog = styled.div<{
-  isDialogOpen: boolean;
-  onEscClose: (event: React.KeyboardEvent) => void;
-}>``;
-
 export const AlertDialogOverLay = styled.div<{
   overlayColor?: string;
   dialogPosition?:
@@ -180,6 +170,8 @@ export const AlertDialogOverLay = styled.div<{
   blockScroll?: boolean;
   closeOnEsc?: boolean;
   closeOnOverlayClick?: boolean;
+  isDialogOpen: boolean;
+  onEscClose?: (event: React.KeyboardEvent) => void;
 }>`
   position: absolute;
   left: 0;

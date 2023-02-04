@@ -67,7 +67,7 @@ const App = () => {
         // overlayColor="pink"
         // dialogPosition="right-bottom"
         blockScroll={true}
-        closeOnEsc={true} //TODO
+        closeOnEsc={true}
         closeOnOverlayClick={true}
       />
     </>

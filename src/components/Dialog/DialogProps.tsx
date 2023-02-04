@@ -17,7 +17,7 @@ export type DialogProps = {
     | Exclude<`${HorizontalPosition}-${VerticalPosition}`, "center-center">
     | "center";
   size?: "small" | "medium" | "large";
-  blockScroll?: boolean; //TODO
-  closeOnEsc?: boolean; //TODO
+  blockScroll?: boolean;
+  closeOnEsc?: boolean;
   closeOnOverlayClick?: boolean;
 };
