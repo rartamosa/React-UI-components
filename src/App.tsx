@@ -66,9 +66,9 @@ const App = () => {
         // cancelButtonColor="blue"
         // overlayColor="pink"
         // dialogPosition="right-bottom"
-        // blockScroll={true} // TODO
-        closeOnEsc={true}
-        // closeOnOverlayClick={true}
+        blockScroll={true}
+        closeOnEsc={true} //TODO
+        closeOnOverlayClick={true}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 
 import {
@@ -20,14 +20,29 @@ const Dialog = ({
   cancelButtonText,
   overlayColor,
   dialogPosition,
-  blockScroll, //TODO
+  blockScroll,
   closeOnEsc, //TODO
   closeOnOverlayClick,
 }: DialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [onBlockScroll, setOnBlockScroll] = useState(blockScroll);
+
+  useEffect(() => {
+    if (onBlockScroll && isDialogOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isDialogOpen]);
 
   const onOpen = (): void => {
     setIsDialogOpen(true);
+    // if (blockScroll && isDialogOpen) {
+    //   setOnBlockScroll(true);
+    //   document.body.style.overflow = "hidden";
+    // } else {
+    //   document.body.style.overflow = "scroll";
+    // }
   };
 
   const onInternalAction = (): void => {
@@ -39,8 +54,10 @@ const Dialog = ({
     if (onCancel) {
       setIsDialogOpen(false);
       onCancel();
+      //   setOnBlockScroll(false);
     } else {
       setIsDialogOpen(false);
+      //   setOnBlockScroll(false);
     }
   };
 
