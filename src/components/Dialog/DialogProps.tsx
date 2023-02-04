@@ -9,7 +9,7 @@ export type DialogProps = {
   dialogBody: string;
   actionButtonColor?: string;
   cancelButtonColor?: string;
-  dialogButtonText: string;
+  buttonText: string;
   actionButtonText: string;
   cancelButtonText: string;
   overlayColor?: string;

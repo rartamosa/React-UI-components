@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
+import { DialogProps } from "./DialogProps";
 import {
-  DialogProps,
-  HorizontalPosition,
-  VerticalPosition,
-} from "./DialogProps";
+  Button,
+  ActionButton,
+  CancelButton,
+} from "../Basic Components/Buttons";
+import { Overlay } from "../Basic Components/Overlay";
 
 const Dialog = ({
   onAction,
@@ -15,7 +17,7 @@ const Dialog = ({
   dialogBody,
   actionButtonColor,
   cancelButtonColor,
-  dialogButtonText,
+  buttonText,
   actionButtonText,
   cancelButtonText,
   overlayColor,
@@ -25,15 +27,14 @@ const Dialog = ({
   closeOnOverlayClick,
 }: DialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [onBlockScroll, setOnBlockScroll] = useState(blockScroll);
 
   useEffect(() => {
-    if (onBlockScroll && isDialogOpen) {
+    if (blockScroll && isDialogOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [isDialogOpen]);
+  }, [isDialogOpen, blockScroll]);
 
   useEffect(() => {
     const onEscClose = (event: KeyboardEvent): void => {
@@ -44,7 +45,7 @@ const Dialog = ({
     window.addEventListener("keydown", onEscClose);
 
     return () => window.removeEventListener("keydown", onEscClose);
-  }, []);
+  }, [closeOnEsc]);
 
   const onOpen = (): void => {
     setIsDialogOpen(true);
@@ -72,16 +73,16 @@ const Dialog = ({
 
   return (
     <>
-      <DialogButton
+      <Button
         onClick={onOpen}
         buttonProps={buttonProps}
-        dialogButtonText={dialogButtonText}
+        buttonText={buttonText}
       >
-        {dialogButtonText}
-      </DialogButton>
+        {buttonText}
+      </Button>
 
       {isDialogOpen && (
-        <AlertDialogOverLay
+        <Overlay
           overlayColor={overlayColor}
           dialogPosition={dialogPosition}
           blockScroll={blockScroll}
@@ -102,7 +103,7 @@ const Dialog = ({
                 onClick={onInternalCancel}
                 buttonProps={buttonProps}
                 cancelButtonColor={cancelButtonColor}
-                dialogButtonText={dialogButtonText}
+                buttonText={buttonText}
                 cancelButtonText={cancelButtonText}
               >
                 {cancelButtonText}
@@ -111,123 +112,20 @@ const Dialog = ({
                 onClick={onInternalAction}
                 buttonProps={buttonProps}
                 actionButtonColor={actionButtonColor}
-                dialogButtonText={dialogButtonText}
+                buttonText={buttonText}
                 actionButtonText={actionButtonText}
               >
                 {actionButtonText}
               </ActionButton>
             </AlertDialogFooter>
           </AlertDialogWindow>
-        </AlertDialogOverLay>
+        </Overlay>
       )}
     </>
   );
 };
 
 export default Dialog;
-
-export const DialogButton = styled.button<{
-  buttonProps?: React.CSSProperties;
-  dialogButtonText: string;
-}>`
-  border-radius: 8px;
-  padding: 5px 10px;
-  border-style: unset;
-  ${(props) =>
-    props.buttonProps &&
-    css`
-      ${{ ...props.buttonProps }}
-    `}
-`;
-
-export const ActionButton = styled(DialogButton)<{
-  buttonProps?: React.CSSProperties;
-  actionButtonColor?: string;
-  actionButtonText: string;
-}>`
-  background-color: ${(props) =>
-    props.actionButtonColor
-      ? props.actionButtonColor
-      : props.buttonProps?.backgroundColor};
-`;
-
-export const CancelButton = styled(DialogButton)<{
-  buttonProps?: React.CSSProperties;
-  cancelButtonColor?: string;
-  cancelButtonText: string;
-}>`
-  background-color: ${(props) =>
-    props.cancelButtonColor
-      ? props.cancelButtonColor
-      : props.buttonProps?.backgroundColor};
-`;
-
-export const AlertDialogOverLay = styled.div<{
-  overlayColor?: string;
-  dialogPosition?:
-    | Exclude<`${HorizontalPosition}-${VerticalPosition}`, "center-center">
-    | "center";
-  blockScroll?: boolean;
-  closeOnEsc?: boolean;
-  closeOnOverlayClick?: boolean;
-  isDialogOpen: boolean;
-  onEscClose?: (event: React.KeyboardEvent) => void;
-}>`
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background-color: ${(props) => props.overlayColor || "rgba(0, 0, 0, 0.3)"};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-y: ${(props) => (props.blockScroll === true ? "hidden" : "auto")}
-    ${(props) =>
-      props.dialogPosition === "left-center" &&
-      css`
-        justify-content: start;
-      `}
-    ${(props) =>
-      props.dialogPosition === "right-center" &&
-      css`
-        justify-content: end;
-      `}
-    ${(props) =>
-      props.dialogPosition === "center-top" &&
-      css`
-        align-items: start;
-      `}
-    ${(props) =>
-      props.dialogPosition === "left-top" &&
-      css`
-        align-items: start;
-        justify-content: start;
-      `}
-    ${(props) =>
-      props.dialogPosition === "right-top" &&
-      css`
-        align-items: start;
-        justify-content: end;
-      `}
-    ${(props) =>
-      props.dialogPosition === "center-bottom" &&
-      css`
-        align-items: end;
-      `}
-    ${(props) =>
-      props.dialogPosition === "left-bottom" &&
-      css`
-        align-items: end;
-        justify-content: start;
-      `}
-    ${(props) =>
-      props.dialogPosition === "right-bottom" &&
-      css`
-        align-items: end;
-        justify-content: end;
-      `};
-`;
 
 export const AlertDialogWindow = styled.div`
   width: 400px;

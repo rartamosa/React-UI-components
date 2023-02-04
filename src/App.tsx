@@ -10,6 +10,8 @@ import selectDummyData from "./components/Select/selectDummyData";
 
 import Dialog from "./components/Dialog/Dialog";
 
+import Toast from "./components/Toast/Toast";
+
 const App = () => {
   const [tags, setTags] = useState<string[]>([]);
   return (
@@ -53,7 +55,7 @@ const App = () => {
         onCancel={() => console.log("Action cancelled")}
         dialogHeader="Delete user"
         dialogBody="Are you sure?"
-        dialogButtonText="Delete user!"
+        buttonText="Delete user!"
         actionButtonText="Delete"
         cancelButtonText="Cancel"
         buttonProps={{
@@ -69,6 +71,19 @@ const App = () => {
         blockScroll={true}
         closeOnEsc={true}
         closeOnOverlayClick={true}
+      />
+
+      <Toast
+        buttonText="Show toast"
+        toastHeader="Example toast header"
+        toastDescription="Example toast description"
+        buttonProps={{ fontFamily: "Red Hat Display" }}
+        // toastTimeout={1000}
+        // toastBacgroundColor="blue"
+        // toastFontColor="pink"
+        // toastIcon="circle-chevron-down"
+        // typeOfToast="info"
+        // toastPosition="top-right"
       />
     </>
   );
