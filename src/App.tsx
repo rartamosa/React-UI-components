@@ -82,7 +82,7 @@ const App = () => {
         // toastBacgroundColor="blue"
         // toastFontColor="pink"
         // toastIcon="circle-chevron-down"
-        // typeOfToast="info"
+        // typeOfToast="warning"
         // toastPosition="top-right"
       />
     </>

@@ -10,7 +10,12 @@ import {
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { ToastProps } from "./ToastProps";
+import {
+  ToastProps,
+  ToastType,
+  toastFontColorHex,
+  toastDefaultIcon,
+} from "./ToastProps";
 import { Button } from "../Basic Components/Buttons";
 import BasicCloseButton from "../Basic Components/BasicCloseButton";
 
@@ -23,28 +28,25 @@ library.add(
 );
 
 const Toast = ({
-  buttonText,
+  buttonText = "Show toast",
   buttonProps,
-  toastHeader,
-  toastDescription,
-  toastTimeout,
+  toastHeader = "Example toast header",
+  toastDescription = "Example toast description",
+  toastTimeout = 4000,
   toastBacgroundColor,
-  toastFontColor,
+  toastFontColor = toastFontColorHex,
   toastIcon,
-  typeOfToast,
-  toastPosition,
+  typeOfToast = "success",
+  toastPosition = "bottom-center",
 }: ToastProps) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
-  //   const [toastList, setToastList] = useState([]);
+  // const [toastList, setToastList] = useState(toast[]);
 
   useEffect(() => {
-    setTimeout(
-      () => {
-        setIsToastVisible(false);
-      },
-      toastTimeout ? toastTimeout : 4000
-    );
-  }, [isToastVisible, toastTimeout]);
+    setTimeout(() => {
+      setIsToastVisible(false);
+    }, toastTimeout);
+  }, [isToastVisible]);
 
   const onShowToast = (): void => {
     setIsToastVisible(true);
@@ -71,11 +73,12 @@ const Toast = ({
           toastPosition={toastPosition}
         >
           {typeOfToast === "success" ||
-            (undefined && (
+            (typeOfToast === undefined && (
               <FontAwesomeIcon
-                icon={toastIcon ? ["fas", toastIcon] : ["fas", "circle-check"]}
+                icon={
+                  toastIcon ? ["fas", toastIcon] : ["fas", toastDefaultIcon]
+                }
                 onClick={onCloseToast}
-                style={{ cursor: "pointer" }}
                 size="xl"
               />
             ))}
@@ -86,7 +89,6 @@ const Toast = ({
                 toastIcon ? ["fas", toastIcon] : ["fas", "circle-exclamation"]
               }
               onClick={onCloseToast}
-              style={{ cursor: "pointer" }}
               size="xl"
             />
           )}
@@ -97,7 +99,6 @@ const Toast = ({
                 toastIcon ? ["fas", toastIcon] : ["fas", "triangle-exclamation"]
               }
               onClick={onCloseToast}
-              style={{ cursor: "pointer" }}
               size="xl"
             />
           )}
@@ -106,7 +107,6 @@ const Toast = ({
             <FontAwesomeIcon
               icon={toastIcon ? ["fas", toastIcon] : ["fas", "circle-info"]}
               onClick={onCloseToast}
-              style={{ cursor: "pointer" }}
               size="xl"
             />
           )}
@@ -158,7 +158,7 @@ export const ToastContainer = styled.div<{
   border-radius: 8px;
   display: flex;
   gap: 10px;
-  color: ${(props) => props.toastFontColor || "#fff"};
+  color: ${(props) => props.toastFontColor};
   margin: 0 0 10px 0;
   ${(props) =>
     props.typeOfToast === "error" &&

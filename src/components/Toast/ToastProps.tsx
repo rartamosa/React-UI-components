@@ -21,3 +21,11 @@ export type ToastProps = {
   //   closeOnEsc?: boolean;
   //   size?: "small" | "medium" | "large";
 };
+
+export type ToastType = {
+  type: "success" | "error" | "warning" | "info";
+};
+
+export const toastFontColorHex = "#fff";
+
+export const toastDefaultIcon = "circle-check";
