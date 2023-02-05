@@ -84,6 +84,8 @@ const App = () => {
         // toastIcon="circle-chevron-down"
         // typeOfToast="warning"
         // toastPosition="top-right"
+        // size="large"
+        // boxShadow={true}
       />
     </>
   );

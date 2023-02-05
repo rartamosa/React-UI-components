@@ -10,12 +10,12 @@ import {
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { ToastProps, toastFontColorHex } from "./ToastProps";
 import {
-  ToastProps,
-  ToastType,
-  toastFontColorHex,
-  toastDefaultIcon,
-} from "./ToastProps";
+  fadeInAnimation,
+  growAnimation,
+  useDelayUnmount,
+} from "./toastAnimations";
 import { Button } from "../Basic Components/Buttons";
 import BasicCloseButton from "../Basic Components/BasicCloseButton";
 
@@ -36,24 +36,42 @@ const Toast = ({
   toastBacgroundColor,
   toastFontColor = toastFontColorHex,
   toastIcon,
-  typeOfToast = "success",
+  typeOfToast,
   toastPosition = "bottom-center",
+  size,
+  boxShadow = false,
+  animationType,
 }: ToastProps) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
-  // const [toastList, setToastList] = useState(toast[]);
+
+  // https://stackoverflow.com/questions/40064249/react-animate-mount-and-unmount-of-a-single-component
+  const [isMounted, setIsMounted] = useState(true);
+  const shouldRenderChild = useDelayUnmount(isMounted, 500);
+  // const mountedStyle = { animation: `${fadeInAnimation} 2s linear forwards` };
+  const mountedStyle = { animation: "fadeInAnimation 5s linear forwards" }; //TODO
+  const unmountedStyle = {
+    animation: "fadeInAnimation 5s linear forwards reverse",
+  };
+  // const unmountedStyle = {
+  //   animation: `${fadeInAnimation} 2s linear forwards reverse`,
+  // };
 
   useEffect(() => {
     setTimeout(() => {
       setIsToastVisible(false);
+      setIsMounted(false);
     }, toastTimeout);
-  }, [isToastVisible]);
+    return () => setIsMounted(false);
+  }, [isToastVisible, toastTimeout]);
 
   const onShowToast = (): void => {
     setIsToastVisible(true);
+    setIsMounted(true);
   };
 
   const onCloseToast = (): void => {
     setIsToastVisible(false);
+    setIsMounted(false);
   };
 
   return (
@@ -65,19 +83,21 @@ const Toast = ({
       >
         {buttonText}
       </Button>
-      {isToastVisible && (
+      {isToastVisible && shouldRenderChild && (
         <ToastContainer
           toastBacgroundColor={toastBacgroundColor}
           toastFontColor={toastFontColor}
           typeOfToast={typeOfToast}
           toastPosition={toastPosition}
+          size={size}
+          boxShadow={boxShadow}
+          animationType={animationType}
+          style={isMounted ? mountedStyle : unmountedStyle}
         >
           {typeOfToast === "success" ||
             (typeOfToast === undefined && (
               <FontAwesomeIcon
-                icon={
-                  toastIcon ? ["fas", toastIcon] : ["fas", toastDefaultIcon]
-                }
+                icon={toastIcon ? ["fas", toastIcon] : ["fas", "circle-check"]}
                 onClick={onCloseToast}
                 size="xl"
               />
@@ -123,9 +143,11 @@ const Toast = ({
             >
               &times;
             </BasicCloseButton>
-            <ToastHeader toastHeader={toastHeader}>{toastHeader}</ToastHeader>
+            <ToastHeader toastHeader={toastHeader} size={size}>
+              {toastHeader}
+            </ToastHeader>
             {toastDescription && (
-              <ToastCopy toastDescription={toastDescription}>
+              <ToastCopy toastDescription={toastDescription} size={size}>
                 {toastDescription}
               </ToastCopy>
             )}
@@ -149,6 +171,9 @@ export const ToastContainer = styled.div<{
     | "top-center"
     | "top-left"
     | "top-right";
+  size?: "small" | "medium" | "large";
+  boxShadow?: boolean;
+  animationType?: "fadein" | "grow" | "slide";
 }>`
   position: absolute;
   bottom: 0;
@@ -158,6 +183,12 @@ export const ToastContainer = styled.div<{
   border-radius: 8px;
   display: flex;
   gap: 10px;
+
+  ${(props) =>
+    props.boxShadow &&
+    css`
+      box-shadow: 3px 3px 10px -1px rgba(51, 51, 51, 1);
+    `}
   color: ${(props) => props.toastFontColor};
   margin: 0 0 10px 0;
   ${(props) =>
@@ -216,6 +247,18 @@ ${(props) =>
       right: 0;
       margin: 10px 10px 0 0;
     `}
+    ${(props) =>
+    props.size === "small" &&
+    css`
+      width: 150px;
+      font-size: 11px;
+      margin-right: 5px;
+    `}
+    ${(props) =>
+    props.size === "large" &&
+    css`
+      width: 350px;
+    `}
 `;
 
 export const ToastDescriptionContainer = styled.div`
@@ -227,12 +270,36 @@ export const ToastDescriptionContainer = styled.div`
 
 export const ToastHeader = styled.span<{
   toastHeader: string;
+  size?: "small" | "medium" | "large";
 }>`
   font-weight: 700;
+  margin-right: 5px;
+  ${(props) =>
+    props.size === "small" &&
+    css`
+      font-size: 11px;
+    `}
+  ${(props) =>
+    props.size === "large" &&
+    css`
+      font-size: 20px;
+    `}
 `;
 
 export const ToastCopy = styled.span<{
   toastDescription?: string;
+  size?: "small" | "medium" | "large";
 }>`
   font-size: 13px;
+  margin-right: 5px;
+  ${(props) =>
+    props.size === "small" &&
+    css`
+      font-size: 9px;
+    `}
+  ${(props) =>
+    props.size === "large" &&
+    css`
+      font-size: 17px;
+    `}
 `;

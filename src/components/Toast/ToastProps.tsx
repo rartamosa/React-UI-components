@@ -17,15 +17,9 @@ export type ToastProps = {
     | "top-center"
     | "top-left"
     | "top-right";
-
-  //   closeOnEsc?: boolean;
-  //   size?: "small" | "medium" | "large";
-};
-
-export type ToastType = {
-  type: "success" | "error" | "warning" | "info";
+  size?: "small" | "medium" | "large";
+  boxShadow?: boolean;
+  animationType?: "fadein" | "grow" | "slide";
 };
 
 export const toastFontColorHex = "#fff";
-
-export const toastDefaultIcon = "circle-check";
