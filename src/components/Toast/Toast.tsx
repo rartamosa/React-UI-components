@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { ToastProps, toastFontColorHex } from "./ToastProps";
 import { determineAnimationType } from "./toastAnimations";
-import { Button } from "../Basic Components/Buttons";
 import BasicCloseButton from "../Basic Components/BasicCloseButton";
 
 library.add(
@@ -23,117 +22,92 @@ library.add(
   faCircleInfo
 );
 
-const Toast = ({
-  buttonText = "Show toast",
-  buttonProps,
-  toastHeader = "Example toast header",
-  toastDescription = "Example toast description",
-  toastTimeout = 4000,
-  toastBacgroundColor,
-  toastFontColor = toastFontColorHex,
-  toastIcon,
-  typeOfToast,
-  toastPosition = "bottom-center",
-  size,
-  boxShadow = false,
-  animationType,
-}: ToastProps) => {
-  const [isToastVisible, setIsToastVisible] = useState(false);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsToastVisible(false);
-  //     setIsMounted(false);
-  //   }, toastTimeout);
-  //   return () => setIsMounted(false);
-  // }, [isToastVisible, toastTimeout]);
-
-  const onShowToast = (): void => {
-    setIsToastVisible(true);
-  };
-
-  const onCloseToast = (): void => {
-    setIsToastVisible(false);
-  };
-
+const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
   return (
     <>
-      <Button
-        buttonText={buttonText}
-        buttonProps={buttonProps}
-        onClick={onShowToast}
-      >
-        {buttonText}
-      </Button>
-      {isToastVisible && (
-        <ToastContainer
-          toastBacgroundColor={toastBacgroundColor}
-          toastFontColor={toastFontColor}
-          typeOfToast={typeOfToast}
-          toastPosition={toastPosition}
-          size={size}
-          boxShadow={boxShadow}
-          animationType={animationType}
-        >
-          {typeOfToast === "success" ||
-            (typeOfToast === undefined && (
+      {toastList.map(
+        ({
+          id,
+          toastHeader,
+          toastDescription,
+          toastBacgroundColor,
+          toastFontColor,
+          toastIcon,
+          typeOfToast,
+          toastPosition,
+          size,
+          boxShadow,
+        }) => (
+          <ToastContainer
+            key={id}
+            toastBacgroundColor={toastBacgroundColor}
+            toastFontColor={toastFontColor}
+            typeOfToast={typeOfToast}
+            toastPosition={toastPosition}
+            size={size}
+            boxShadow={boxShadow}
+            animationType={animationType}
+          >
+            {typeOfToast === "success" ||
+              (typeOfToast === undefined && (
+                <FontAwesomeIcon
+                  icon={
+                    toastIcon ? ["fas", toastIcon] : ["fas", "circle-check"]
+                  }
+                  size="xl"
+                />
+              ))}
+
+            {typeOfToast === "error" && (
               <FontAwesomeIcon
-                icon={toastIcon ? ["fas", toastIcon] : ["fas", "circle-check"]}
-                onClick={onCloseToast}
+                icon={
+                  toastIcon ? ["fas", toastIcon] : ["fas", "circle-exclamation"]
+                }
                 size="xl"
               />
-            ))}
-
-          {typeOfToast === "error" && (
-            <FontAwesomeIcon
-              icon={
-                toastIcon ? ["fas", toastIcon] : ["fas", "circle-exclamation"]
-              }
-              onClick={onCloseToast}
-              size="xl"
-            />
-          )}
-
-          {typeOfToast === "warning" && (
-            <FontAwesomeIcon
-              icon={
-                toastIcon ? ["fas", toastIcon] : ["fas", "triangle-exclamation"]
-              }
-              onClick={onCloseToast}
-              size="xl"
-            />
-          )}
-
-          {typeOfToast === "info" && (
-            <FontAwesomeIcon
-              icon={toastIcon ? ["fas", toastIcon] : ["fas", "circle-info"]}
-              onClick={onCloseToast}
-              size="xl"
-            />
-          )}
-
-          <ToastDescriptionContainer>
-            <BasicCloseButton
-              onClick={onCloseToast}
-              style={{
-                position: "absolute",
-                right: "0",
-                top: "0",
-                paddingRight: "7px",
-              }}
-            >
-              &times;
-            </BasicCloseButton>
-            <ToastHeader toastHeader={toastHeader} size={size}>
-              {toastHeader}
-            </ToastHeader>
-            {toastDescription && (
-              <ToastCopy toastDescription={toastDescription} size={size}>
-                {toastDescription}
-              </ToastCopy>
             )}
-          </ToastDescriptionContainer>
-        </ToastContainer>
+
+            {typeOfToast === "warning" && (
+              <FontAwesomeIcon
+                icon={
+                  toastIcon
+                    ? ["fas", toastIcon]
+                    : ["fas", "triangle-exclamation"]
+                }
+                size="xl"
+              />
+            )}
+
+            {typeOfToast === "info" && (
+              <FontAwesomeIcon
+                icon={toastIcon ? ["fas", toastIcon] : ["fas", "circle-info"]}
+                size="xl"
+              />
+            )}
+
+            <ToastDescriptionContainer>
+              <BasicCloseButton
+                onClick={() => onToastRemove(id)}
+                style={{
+                  position: "absolute",
+                  right: "0",
+                  top: "0",
+                  paddingRight: "7px",
+                }}
+              >
+                &times;
+              </BasicCloseButton>
+              <ToastHeader toastHeader={toastHeader} size={size}>
+                {toastHeader}
+              </ToastHeader>
+              {toastDescription && (
+                <ToastCopy toastDescription={toastDescription} size={size}>
+                  {toastDescription}
+                </ToastCopy>
+              )}
+            </ToastDescriptionContainer>
+          </ToastContainer>
+        )
       )}
     </>
   );
@@ -167,7 +141,7 @@ export const ToastContainer = styled.div<{
   gap: 10px;
 
   animation-name: ${(props) => determineAnimationType(props.animationType)};
-  animation-duration: 2s;
+  animation-duration: 0.2s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 

@@ -24,6 +24,8 @@ export const determineAnimationType = (animationType?: string): Keyframes => {
     return fadein;
   } else if (animationType === "grow") {
     return grow;
+  } else if (animationType === "slide") {
+    return slide;
   }
   return fadein;
 };
@@ -36,8 +38,19 @@ export const fadein = keyframes`
 `;
 
 export const grow = keyframes`
-0% { width: 0% }
-30% { width: 30% }
-60% { width: 60% }
-100% { width: 100% }
+from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+`;
+
+export const slide = keyframes`
+0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 `;

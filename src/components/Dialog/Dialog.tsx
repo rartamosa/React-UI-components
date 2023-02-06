@@ -73,11 +73,7 @@ const Dialog = ({
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        buttonProps={buttonProps}
-        buttonText={buttonText}
-      >
+      <Button onClick={onOpen} buttonProps={buttonProps}>
         {buttonText}
       </Button>
 
@@ -103,8 +99,6 @@ const Dialog = ({
                 onClick={onInternalCancel}
                 buttonProps={buttonProps}
                 cancelButtonColor={cancelButtonColor}
-                buttonText={buttonText}
-                cancelButtonText={cancelButtonText}
               >
                 {cancelButtonText}
               </CancelButton>
@@ -112,8 +106,6 @@ const Dialog = ({
                 onClick={onInternalAction}
                 buttonProps={buttonProps}
                 actionButtonColor={actionButtonColor}
-                buttonText={buttonText}
-                actionButtonText={actionButtonText}
               >
                 {actionButtonText}
               </ActionButton>

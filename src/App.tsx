@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
 
+// TAGS INPUT
 import TagInput from "./components/TagsInput/TagsInput";
 import { tagsDummyData } from "./components/TagsInput/tagsDummyData";
 
+// SELECT
 import Select from "./components/Select/Select";
 import selectDummyData from "./components/Select/selectDummyData";
 
+// DIALOG
 import Dialog from "./components/Dialog/Dialog";
 
+// TOAST
+import { Button } from "./components/Basic Components/Buttons";
 import Toast from "./components/Toast/Toast";
+import useToast from "./components/Toast/useToast";
 
 const App = () => {
   const [tags, setTags] = useState<string[]>([]);
+
+  const [toastList, onToastAdd, onToastRemove] = useToast(3000);
+
   return (
     <>
       <TagInput
@@ -73,20 +82,16 @@ const App = () => {
         closeOnOverlayClick={true}
       />
 
-      <Toast
-        buttonText="Show toast"
-        toastHeader="Example toast header"
-        toastDescription="Example toast description"
+      <Button
         buttonProps={{ fontFamily: "Red Hat Display" }}
-        // toastTimeout={1000}
-        // toastBacgroundColor="blue"
-        // toastFontColor="pink"
-        // toastIcon="circle-chevron-down"
-        // typeOfToast="warning"
-        // toastPosition="top-right"
-        // size="large"
-        // boxShadow={true}
-        // animationType="grow"
+        onClick={() => onToastAdd({ toastHeader: "Example toast header" })}
+      >
+        Generate toast
+      </Button>
+      <Toast
+        toastList={toastList}
+        animationType="slide"
+        onToastRemove={onToastRemove}
       />
     </>
   );
