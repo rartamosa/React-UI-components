@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { keyframes } from "styled-components";
+import { keyframes, Keyframes } from "styled-components";
 
 export const useDelayUnmount = (
   isMounted: boolean,
@@ -19,14 +19,23 @@ export const useDelayUnmount = (
   return shouldRender;
 };
 
-export const fadeInAnimation = keyframes`
+export const determineAnimationType = (animationType?: string): Keyframes => {
+  if (animationType === "fadein") {
+    return fadein;
+  } else if (animationType === "grow") {
+    return grow;
+  }
+  return fadein;
+};
+
+export const fadein = keyframes`
 0% { opacity: 0.1 }
 30% { opacity: 0.4 }
 60% { opacity: 0.7 }
 100% { opacity: 1 }
 `;
 
-export const growAnimation = keyframes`
+export const grow = keyframes`
 0% { width: 0% }
 30% { width: 30% }
 60% { width: 60% }

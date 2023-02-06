@@ -11,11 +11,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { ToastProps, toastFontColorHex } from "./ToastProps";
-import {
-  fadeInAnimation,
-  growAnimation,
-  useDelayUnmount,
-} from "./toastAnimations";
+import { determineAnimationType } from "./toastAnimations";
 import { Button } from "../Basic Components/Buttons";
 import BasicCloseButton from "../Basic Components/BasicCloseButton";
 
@@ -44,34 +40,20 @@ const Toast = ({
 }: ToastProps) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
 
-  // https://stackoverflow.com/questions/40064249/react-animate-mount-and-unmount-of-a-single-component
-  const [isMounted, setIsMounted] = useState(true);
-  const shouldRenderChild = useDelayUnmount(isMounted, 500);
-  // const mountedStyle = { animation: `${fadeInAnimation} 2s linear forwards` };
-  const mountedStyle = { animation: "fadeInAnimation 5s linear forwards" }; //TODO
-  const unmountedStyle = {
-    animation: "fadeInAnimation 5s linear forwards reverse",
-  };
-  // const unmountedStyle = {
-  //   animation: `${fadeInAnimation} 2s linear forwards reverse`,
-  // };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsToastVisible(false);
-      setIsMounted(false);
-    }, toastTimeout);
-    return () => setIsMounted(false);
-  }, [isToastVisible, toastTimeout]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsToastVisible(false);
+  //     setIsMounted(false);
+  //   }, toastTimeout);
+  //   return () => setIsMounted(false);
+  // }, [isToastVisible, toastTimeout]);
 
   const onShowToast = (): void => {
     setIsToastVisible(true);
-    setIsMounted(true);
   };
 
   const onCloseToast = (): void => {
     setIsToastVisible(false);
-    setIsMounted(false);
   };
 
   return (
@@ -83,7 +65,7 @@ const Toast = ({
       >
         {buttonText}
       </Button>
-      {isToastVisible && shouldRenderChild && (
+      {isToastVisible && (
         <ToastContainer
           toastBacgroundColor={toastBacgroundColor}
           toastFontColor={toastFontColor}
@@ -92,7 +74,6 @@ const Toast = ({
           size={size}
           boxShadow={boxShadow}
           animationType={animationType}
-          style={isMounted ? mountedStyle : unmountedStyle}
         >
           {typeOfToast === "success" ||
             (typeOfToast === undefined && (
@@ -174,6 +155,7 @@ export const ToastContainer = styled.div<{
   size?: "small" | "medium" | "large";
   boxShadow?: boolean;
   animationType?: "fadein" | "grow" | "slide";
+  animation?: string;
 }>`
   position: absolute;
   bottom: 0;
@@ -183,6 +165,11 @@ export const ToastContainer = styled.div<{
   border-radius: 8px;
   display: flex;
   gap: 10px;
+
+  animation-name: ${(props) => determineAnimationType(props.animationType)};
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
 
   ${(props) =>
     props.boxShadow &&

@@ -86,6 +86,7 @@ const App = () => {
         // toastPosition="top-right"
         // size="large"
         // boxShadow={true}
+        // animationType="grow"
       />
     </>
   );

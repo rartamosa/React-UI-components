@@ -20,6 +20,7 @@ export type ToastProps = {
   size?: "small" | "medium" | "large";
   boxShadow?: boolean;
   animationType?: "fadein" | "grow" | "slide";
+  animation?: string;
 };
 
 export const toastFontColorHex = "#fff";
