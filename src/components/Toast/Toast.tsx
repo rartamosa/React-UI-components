@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import {
   fas,
@@ -31,19 +30,19 @@ const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
           toastHeader,
           toastDescription,
           toastBacgroundColor,
-          toastFontColor,
+          toastFontColor = toastFontColorHex,
           toastIcon,
           typeOfToast,
-          toastPosition,
+          // toastPosition,
           size,
           boxShadow,
         }) => (
-          <ToastContainer
+          <SingleToast
             key={id}
             toastBacgroundColor={toastBacgroundColor}
             toastFontColor={toastFontColor}
             typeOfToast={typeOfToast}
-            toastPosition={toastPosition}
+            // toastPosition={toastPosition}
             size={size}
             boxShadow={boxShadow}
             animationType={animationType}
@@ -106,7 +105,7 @@ const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
                 </ToastCopy>
               )}
             </ToastDescriptionContainer>
-          </ToastContainer>
+          </SingleToast>
         )
       )}
     </>
@@ -115,24 +114,22 @@ const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
 
 export default Toast;
 
-export const ToastContainer = styled.div<{
+export const SingleToast = styled.div<{
   toastBacgroundColor?: string;
   toastFontColor?: string;
   typeOfToast?: "success" | "error" | "warning" | "info";
-  toastPosition?:
-    | "bottom-center"
-    | "bottom-left"
-    | "bottom-right"
-    | "top-center"
-    | "top-left"
-    | "top-right";
+  // toastPosition?:
+  //   | "bottom-center"
+  //   | "bottom-left"
+  //   | "bottom-right"
+  //   | "top-center"
+  //   | "top-left"
+  //   | "top-right";
   size?: "small" | "medium" | "large";
   boxShadow?: boolean;
   animationType?: "fadein" | "grow" | "slide";
   animation?: string;
 }>`
-  position: absolute;
-  bottom: 0;
   background-color: ${(props) => props.toastBacgroundColor || "#6cbb5a"};
   padding: 10px;
   width: 250px;
@@ -173,41 +170,7 @@ export const ToastContainer = styled.div<{
         ? props.toastBacgroundColor
         : "#00a7db"};
     `}
-${(props) =>
-    props.toastPosition === "bottom-left" &&
-    css`
-      left: 0;
-      margin: 0 0 10px 10px;
-    `}
-${(props) =>
-    props.toastPosition === "bottom-right" &&
-    css`
-      right: 0;
-      margin: 0 10px 10px 0;
-    `}
-${(props) =>
-    props.toastPosition === "top-center" &&
-    css`
-      top: 0;
-      bottom: unset;
-      margin: 10px 0 0 0;
-    `}
-${(props) =>
-    props.toastPosition === "top-left" &&
-    css`
-      top: 0;
-      bottom: unset;
-      left: 0;
-      margin: 10px 0 0 10px;
-    `}
-${(props) =>
-    props.toastPosition === "top-right" &&
-    css`
-      top: 0;
-      bottom: unset;
-      right: 0;
-      margin: 10px 10px 0 0;
-    `}
+
     ${(props) =>
     props.size === "small" &&
     css`
@@ -220,6 +183,24 @@ ${(props) =>
     css`
       width: 350px;
     `}
+
+    @media (max-width: 768px) {
+    width: 150px;
+    font-size: 11px;
+    margin-right: 5px;
+    ${(props) =>
+      props.size === "small" &&
+      css`
+        width: 100px;
+        font-size: 8px;
+      `}
+    ${(props) =>
+      props.size === "large" &&
+      css`
+        width: 200px;
+        font-size: 9px;
+      `}
+  }
 `;
 
 export const ToastDescriptionContainer = styled.div`

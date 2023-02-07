@@ -17,6 +17,7 @@ import Dialog from "./components/Dialog/Dialog";
 import { Button } from "./components/Basic Components/Buttons";
 import Toast from "./components/Toast/Toast";
 import useToast from "./components/Toast/useToast";
+import ToastContainer from "./components/Toast/ToastContainer";
 
 const App = () => {
   const [tags, setTags] = useState<string[]>([]);
@@ -82,17 +83,31 @@ const App = () => {
         closeOnOverlayClick={true}
       />
 
+      {/* TOAST */}
       <Button
         buttonProps={{ fontFamily: "Red Hat Display" }}
-        onClick={() => onToastAdd({ toastHeader: "Example toast header" })}
+        onClick={() =>
+          onToastAdd({
+            toastHeader: "Example toast header",
+            // typeOfToast: "warning",
+            toastDescription: "Example toast description",
+            // size: "small",
+            // boxShadow: true,
+            // toastIcon: "circle-chevron-down",
+            // toastBacgroundColor: "pink",
+            // toastFontColor: "black",
+          })
+        }
       >
         Generate toast
       </Button>
-      <Toast
-        toastList={toastList}
-        animationType="slide"
-        onToastRemove={onToastRemove}
-      />
+      <ToastContainer toastsPosition="top-left">
+        <Toast
+          toastList={toastList}
+          animationType="grow"
+          onToastRemove={onToastRemove}
+        />
+      </ToastContainer>
     </>
   );
 };
