@@ -140,7 +140,7 @@ const Select = ({
           icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-down"]}
           color={iconColor || MAIN_DARK_FONT_COLOR}
           onClick={onSelectOptionsOpen}
-          style={{ cursor: "pointer" }}
+          style={isDisabled ? { cursor: "not-allowed" } : { cursor: "pointer" }}
         />
 
         {areSelectOptionsOpen && (

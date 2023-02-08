@@ -24,7 +24,7 @@ const TagInput = ({
   placeholder,
   tagsFontColor,
   errorBorderColor,
-  isDisabled, // TODO ten props powinien blokować wszystko, równiez mozliwość usuwania tagów
+  isDisabled,
   tagsSuggestionsContainerPosition,
 }: TagInputProps) => {
   const [inputValue, setInputValue] = useState("");
@@ -53,11 +53,10 @@ const TagInput = ({
 
   const onFormSubmit = (event: React.KeyboardEvent): void => {
     if (event.key === "Enter") {
-      // TODO to jest case sensitive, zmienić to
       event.preventDefault();
       event.stopPropagation();
-      const matchingTag = tagsSuggestions.find(
-        (tag) => tag.name === inputValue
+      const matchingTag = tagsSuggestions.find((tag) =>
+        tag.name.toLowerCase().startsWith(inputValue.toLowerCase())
       );
       const existingTag = tags.find((tag) => tag === matchingTag?._id);
       if (matchingTag && !existingTag) {
@@ -67,6 +66,7 @@ const TagInput = ({
         );
       } else {
         setError(true);
+        setInputValue("");
       }
       setInputValue("");
     }
@@ -112,15 +112,23 @@ const TagInput = ({
           );
           return (
             <TagsInputContainerSingleTag
-              style={{ backgroundColor: currentTag?.color }}
+              style={
+                isDisabled
+                  ? { backgroundColor: "#808080" }
+                  : { backgroundColor: currentTag?.color }
+              }
               key={tagID}
               componentSize={componentSize}
               tagsFontColor={tagsFontColor}
+              isDisabled={isDisabled || false}
             >
               {currentTag?.name}
               <BasicCloseButton
-                onClick={() => handleTagRemove(tagID)}
+                onClick={isDisabled ? undefined : () => handleTagRemove(tagID)}
                 componentSize={componentSize}
+                style={
+                  isDisabled ? { cursor: "not-allowed" } : { cursor: "pointer" }
+                }
               >
                 &times;
               </BasicCloseButton>
@@ -177,9 +185,11 @@ export default TagInput;
 export const TagsInputContainerSingleTag = styled.span<{
   componentSize?: "small" | "medium" | "large";
   tagsFontColor?: string;
+  isDisabled?: boolean;
 }>`
   padding: 6px 12px;
   gap: 4px;
+  height: fit-content;
   ${(props) =>
     props.componentSize === "small" &&
     css`
@@ -199,6 +209,12 @@ export const TagsInputContainerSingleTag = styled.span<{
   text-transform: capitalize;
   white-space: nowrap;
   color: ${(props) => props.tagsFontColor || MAIN_DARK_FONT_COLOR};
+  ${(props) =>
+    props.isDisabled &&
+    css`
+      color: #333;
+      cursor: not-allowed;
+    `}
 `;
 
 export const TagsInputContainerSuggestions = styled.div<{
@@ -207,12 +223,13 @@ export const TagsInputContainerSuggestions = styled.div<{
   tagsSuggestionsBorderWidth?: string;
   backgroundColor?: string;
   tagsSuggestionsContainerPosition?: "left" | "top" | "right" | "bottom";
+  mobileTagsSuggestionsContainerPosition?: "top" | "bottom;";
 }>`
   top: 43px;
   width: 300px;
   padding: 15px 8px;
   gap: 8px;
-  max-height: 100px;
+  height: 100px;
   ${(props) =>
     props.componentSize === "small" &&
     css`
@@ -300,4 +317,11 @@ export const TagsInputContainerSuggestions = styled.div<{
   flex-wrap: wrap;
   overflow-x: auto;
   background-color: ${(props) => props.backgroundColor || "#fff"};
+  @media (max-width: 768px) {
+    ${(props) =>
+      props.tagsSuggestionsContainerPosition === "top" &&
+      css`
+        top: -99px;
+      `}
+  }
 `;

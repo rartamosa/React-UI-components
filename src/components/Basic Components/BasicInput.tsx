@@ -30,6 +30,7 @@ const BasicInput = styled.input<{
   background-color: ${(props) => props.backgroundColor || "#fff"};
   &:disabled {
     background-color: #c8c8c8;
+    cursor: not-allowed;
   }
 `;
 

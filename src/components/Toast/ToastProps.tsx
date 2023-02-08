@@ -5,6 +5,13 @@ export type ToastProps = {
   toastList: SingleToastProps[];
   animationType?: "fadein" | "grow" | "slide";
   onToastRemove: (id: string) => void;
+  toastsPosition?:
+    | "bottom-center"
+    | "bottom-left"
+    | "bottom-right"
+    | "top-center"
+    | "top-left"
+    | "top-right";
 };
 
 export type ToastToAdd = {
@@ -22,15 +29,15 @@ export type SingleToastProps = ToastToAdd & {
   id: string;
 };
 
-export type ToastContainerProps = {
-  toastsPosition?:
-    | "bottom-center"
-    | "bottom-left"
-    | "bottom-right"
-    | "top-center"
-    | "top-left"
-    | "top-right";
-  children: ReactNode;
-};
+// export type ToastContainerProps = {
+//   toastsPosition?:
+//     | "bottom-center"
+//     | "bottom-left"
+//     | "bottom-right"
+//     | "top-center"
+//     | "top-left"
+//     | "top-right";
+//   children: ReactNode;
+// };
 
 export const toastFontColorHex = "#fff";

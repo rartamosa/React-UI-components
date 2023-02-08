@@ -34,6 +34,7 @@ const BasicContainer = styled.div<{
     props.isDisabled &&
     css`
       background-color: #c8c8c8 !important;
+      cursor: not-allowed;
     `}  
     background-color: ${(props) => props.backgroundColor || "#fff"};
   border-radius: 8px;

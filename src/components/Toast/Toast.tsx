@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { ToastProps, toastFontColorHex } from "./ToastProps";
 import { determineAnimationType } from "./toastAnimations";
+
 import BasicCloseButton from "../Basic Components/BasicCloseButton";
 
 library.add(
@@ -21,10 +22,14 @@ library.add(
   faCircleInfo
 );
 
-const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
+const Toast = ({
+  toastList,
+  animationType,
+  onToastRemove,
+  toastsPosition,
+}: ToastProps) => {
   return (
-    <>
-      {/* TODO przenieść tu ToastContainer */}
+    <ToastContainerDiv toastsPosition={toastsPosition}>
       {toastList.map(
         ({
           id,
@@ -107,7 +112,7 @@ const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
           </SingleToast>
         )
       )}
-    </>
+    </ToastContainerDiv>
   );
 };
 
@@ -235,5 +240,58 @@ export const ToastCopy = styled.span<{
     props.size === "large" &&
     css`
       font-size: 17px;
+    `}
+`;
+
+export const ToastContainerDiv = styled.div<{
+  toastsPosition?:
+    | "bottom-center"
+    | "bottom-left"
+    | "bottom-right"
+    | "top-center"
+    | "top-left"
+    | "top-right";
+}>`
+  position: absolute;
+  bottom: 0;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column-reverse;
+
+  ${(props) =>
+    props.toastsPosition === "bottom-left" &&
+    css`
+      left: 0;
+      margin: 0 0 10px 10px;
+    `}
+  ${(props) =>
+    props.toastsPosition === "bottom-right" &&
+    css`
+      right: 0;
+      margin: 0 10px 10px 0;
+    `}
+${(props) =>
+    props.toastsPosition === "top-center" &&
+    css`
+      top: 0;
+      bottom: unset;
+      margin: 10px 0 0 0;
+    `}
+${(props) =>
+    props.toastsPosition === "top-left" &&
+    css`
+      top: 0;
+      bottom: unset;
+      left: 0;
+      margin: 10px 0 0 10px;
+    `}
+${(props) =>
+    props.toastsPosition === "top-right" &&
+    css`
+      top: 0;
+      bottom: unset;
+      right: 0;
+      margin: 10px 10px 0 0;
     `}
 `;

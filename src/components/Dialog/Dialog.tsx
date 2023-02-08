@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { DialogProps } from "./DialogProps";
-import {
-  Button,
-  ActionButton,
-  CancelButton,
-} from "../Basic Components/Buttons";
+import { ActionButton, CancelButton } from "../Basic Components/Buttons";
 import { Overlay } from "../Basic Components/Overlay";
 
 const Dialog = ({
@@ -14,10 +10,10 @@ const Dialog = ({
   onCancel,
   buttonProps,
   dialogHeader,
+  isDialogOpen,
   dialogBody,
   actionButtonColor,
   cancelButtonColor,
-  buttonText,
   actionButtonText,
   cancelButtonText,
   overlayColor,
@@ -26,8 +22,6 @@ const Dialog = ({
   closeOnEsc,
   closeOnOverlayClick,
 }: DialogProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false); // TODO przenieść do app.tsx; state przekazywać w propsie isDialogOpen
-
   useEffect(() => {
     if (blockScroll && isDialogOpen) {
       document.body.style.overflow = "hidden";
@@ -39,7 +33,7 @@ const Dialog = ({
   useEffect(() => {
     const onEscClose = (event: KeyboardEvent): void => {
       if (closeOnEsc && event.key === "Escape") {
-        onInternalCancel();
+        onCancel();
       }
     };
     window.addEventListener("keydown", onEscClose);
@@ -47,37 +41,18 @@ const Dialog = ({
     return () => window.removeEventListener("keydown", onEscClose);
   }, [closeOnEsc]);
 
-  const onOpen = (): void => {
-    setIsDialogOpen(true);
-  };
-
-  const onInternalAction = (): void => {
-    setIsDialogOpen(false);
-    onAction();
-  };
-
-  const onInternalCancel = (): void => {
-    if (onCancel) {
-      setIsDialogOpen(false);
-      onCancel();
-    } else {
-      setIsDialogOpen(false);
-    }
-  };
-
   const onOverlayClickClose = (): void => {
     if (closeOnOverlayClick) {
-      onInternalCancel();
+      onCancel();
     }
+  };
+
+  const dialogWindowLogic = (event: React.SyntheticEvent) => {
+    event.stopPropagation();
   };
 
   return (
     <>
-      <Button onClick={onOpen} buttonProps={buttonProps}>
-        {buttonText}
-      </Button>
-      {/* TODO button wydzielić poza ten komponent; dialog moze być wywołany na rózne rzeczy */}
-
       {isDialogOpen && (
         <Overlay
           overlayColor={overlayColor}
@@ -88,8 +63,7 @@ const Dialog = ({
           onClick={onOverlayClickClose}
           isDialogOpen={isDialogOpen}
         >
-          <AlertDialogWindow onClick={(event) => event.stopPropagation()}>
-            {/* TODO wydzielić logikę do osobnej funkcji */}
+          <AlertDialogWindow onClick={dialogWindowLogic}>
             <AlertDialogHeader dialogHeader={dialogHeader}>
               {dialogHeader}
             </AlertDialogHeader>
@@ -98,14 +72,14 @@ const Dialog = ({
             </AlertDialogBody>
             <AlertDialogFooter>
               <CancelButton
-                onClick={onInternalCancel}
+                onClick={onCancel}
                 buttonProps={buttonProps}
                 cancelButtonColor={cancelButtonColor}
               >
                 {cancelButtonText}
               </CancelButton>
               <ActionButton
-                onClick={onInternalAction}
+                onClick={onAction}
                 buttonProps={buttonProps}
                 actionButtonColor={actionButtonColor}
               >

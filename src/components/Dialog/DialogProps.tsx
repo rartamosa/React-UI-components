@@ -3,7 +3,8 @@ export type VerticalPosition = "top" | "center" | "bottom";
 
 export type DialogProps = {
   onAction: () => void;
-  onCancel?: () => void;
+  onCancel: () => void;
+  isDialogOpen: boolean;
   buttonProps?: React.CSSProperties;
   dialogHeader: string;
   dialogBody: string;

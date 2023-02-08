@@ -17,16 +17,32 @@ import Dialog from "./components/Dialog/Dialog";
 import { Button } from "./components/Basic Components/Buttons";
 import Toast from "./components/Toast/Toast";
 import useToast from "./components/Toast/useToast";
-import ToastContainer from "./components/Toast/ToastContainer";
 
 const App = () => {
+  //  TAGS INPUT
   const [tags, setTags] = useState<string[]>([]);
 
+  // DIALOG
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // TOAST
   const [toastList, onToastAdd, onToastRemove] = useToast(3000);
+
+  // DIALOG
+  const onActionLogic = (): void => {
+    console.log("Action taken");
+    setIsDialogOpen(false);
+  };
+
+  const onCancelLogic = (): void => {
+    console.log("Action cancelled");
+    setIsDialogOpen(false);
+  };
 
   return (
     <>
-      <TagInput // TODO zablokować w mobile tagsSuggestions po lewej i prawej stronie
+      {/* TAGS INPUT */}
+      <TagInput
         tags={tags}
         tagsSuggestions={tagsDummyData}
         onTagAdd={(tag) => setTags([...tags, tag])}
@@ -42,10 +58,11 @@ const App = () => {
         // placeholder="Hello"
         // tagsFontColor="purple"
         // errorBorderColor="red"
-        // isDisabled={true} // TODO zmienić pointer na przekreślone kółko
-        // tagsSuggestionsContainerPosition="left"
+        // isDisabled={true}
+        // tagsSuggestionsContainerPosition="top"
       />
 
+      {/* SELECT */}
       <Select
         selectOptions={selectDummyData}
         shouldCloseOnClear={false}
@@ -54,15 +71,23 @@ const App = () => {
         // containerBorderWidth="3px"
         // componentSize="large"
         // backgroundColor="pink"
-        // isDisabled={true} // TODO zmienić pointer na przekreślone kółko
+        // isDisabled={true}
         // errorBorderColor="red"
         // iconColor="blue"
         // customIcon="sun"
       />
 
+      {/* DIALOG */}
+      <Button
+        buttonProps={{ fontFamily: "Red Hat Display" }}
+        onClick={() => setIsDialogOpen(true)}
+      >
+        Delete user
+      </Button>
       <Dialog
-        onAction={() => console.log("Action taken")}
-        onCancel={() => console.log("Action cancelled")}
+        onAction={onActionLogic}
+        onCancel={onCancelLogic}
+        isDialogOpen={isDialogOpen}
         dialogHeader="Delete user"
         dialogBody="Are you sure?"
         buttonText="Delete user!"
@@ -89,9 +114,9 @@ const App = () => {
         onClick={() =>
           onToastAdd({
             toastHeader: "Example toast header",
-            // typeOfToast: "error",
+            typeOfToast: "error",
             // toastDescription: "Example toast description",
-            // size: "small",
+            // size: "large",
             // boxShadow: true,
             // toastIcon: "sun",
             // toastBacgroundColor: "pink",
@@ -101,13 +126,12 @@ const App = () => {
       >
         Generate toast
       </Button>
-      <ToastContainer toastsPosition="bottom-center">
-        <Toast
-          toastList={toastList}
-          animationType="slide"
-          onToastRemove={onToastRemove}
-        />
-      </ToastContainer>
+      <Toast
+        toastList={toastList}
+        animationType="slide"
+        onToastRemove={onToastRemove}
+        // toastsPosition="top-left"
+      />
     </>
   );
 };
