@@ -24,7 +24,7 @@ const TagInput = ({
   placeholder,
   tagsFontColor,
   errorBorderColor,
-  isDisabled,
+  isDisabled, // TODO ten props powinien blokować wszystko, równiez mozliwość usuwania tagów
   tagsSuggestionsContainerPosition,
 }: TagInputProps) => {
   const [inputValue, setInputValue] = useState("");
@@ -53,6 +53,7 @@ const TagInput = ({
 
   const onFormSubmit = (event: React.KeyboardEvent): void => {
     if (event.key === "Enter") {
+      // TODO to jest case sensitive, zmienić to
       event.preventDefault();
       event.stopPropagation();
       const matchingTag = tagsSuggestions.find(

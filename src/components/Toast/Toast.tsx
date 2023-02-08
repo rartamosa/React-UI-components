@@ -24,6 +24,7 @@ library.add(
 const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
   return (
     <>
+      {/* TODO przenieść tu ToastContainer */}
       {toastList.map(
         ({
           id,
@@ -33,7 +34,6 @@ const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
           toastFontColor = toastFontColorHex,
           toastIcon,
           typeOfToast,
-          // toastPosition,
           size,
           boxShadow,
         }) => (
@@ -42,7 +42,6 @@ const Toast = ({ toastList, animationType, onToastRemove }: ToastProps) => {
             toastBacgroundColor={toastBacgroundColor}
             toastFontColor={toastFontColor}
             typeOfToast={typeOfToast}
-            // toastPosition={toastPosition}
             size={size}
             boxShadow={boxShadow}
             animationType={animationType}
@@ -118,13 +117,6 @@ export const SingleToast = styled.div<{
   toastBacgroundColor?: string;
   toastFontColor?: string;
   typeOfToast?: "success" | "error" | "warning" | "info";
-  // toastPosition?:
-  //   | "bottom-center"
-  //   | "bottom-left"
-  //   | "bottom-right"
-  //   | "top-center"
-  //   | "top-left"
-  //   | "top-right";
   size?: "small" | "medium" | "large";
   boxShadow?: boolean;
   animationType?: "fadein" | "grow" | "slide";

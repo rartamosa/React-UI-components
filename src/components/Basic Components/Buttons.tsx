@@ -6,6 +6,7 @@ export const Button = styled.button<{
   border-radius: 8px;
   padding: 5px 10px;
   border-style: unset;
+  cursor: pointer;
   ${(props) =>
     props.buttonProps &&
     css`

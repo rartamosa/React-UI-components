@@ -26,7 +26,7 @@ const Dialog = ({
   closeOnEsc,
   closeOnOverlayClick,
 }: DialogProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // TODO przenieść do app.tsx; state przekazywać w propsie isDialogOpen
 
   useEffect(() => {
     if (blockScroll && isDialogOpen) {
@@ -76,6 +76,7 @@ const Dialog = ({
       <Button onClick={onOpen} buttonProps={buttonProps}>
         {buttonText}
       </Button>
+      {/* TODO button wydzielić poza ten komponent; dialog moze być wywołany na rózne rzeczy */}
 
       {isDialogOpen && (
         <Overlay
@@ -88,6 +89,7 @@ const Dialog = ({
           isDialogOpen={isDialogOpen}
         >
           <AlertDialogWindow onClick={(event) => event.stopPropagation()}>
+            {/* TODO wydzielić logikę do osobnej funkcji */}
             <AlertDialogHeader dialogHeader={dialogHeader}>
               {dialogHeader}
             </AlertDialogHeader>

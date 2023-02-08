@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faSun } from "@fortawesome/free-solid-svg-icons";
 
 // TAGS INPUT
 import TagInput from "./components/TagsInput/TagsInput";
@@ -26,7 +26,7 @@ const App = () => {
 
   return (
     <>
-      <TagInput
+      <TagInput // TODO zablokować w mobile tagsSuggestions po lewej i prawej stronie
         tags={tags}
         tagsSuggestions={tagsDummyData}
         onTagAdd={(tag) => setTags([...tags, tag])}
@@ -42,8 +42,8 @@ const App = () => {
         // placeholder="Hello"
         // tagsFontColor="purple"
         // errorBorderColor="red"
-        // isDisabled={true}
-        // tagsSuggestionsContainerPosition="top"
+        // isDisabled={true} // TODO zmienić pointer na przekreślone kółko
+        // tagsSuggestionsContainerPosition="left"
       />
 
       <Select
@@ -54,10 +54,10 @@ const App = () => {
         // containerBorderWidth="3px"
         // componentSize="large"
         // backgroundColor="pink"
-        // isDisabled={true}
+        // isDisabled={true} // TODO zmienić pointer na przekreślone kółko
         // errorBorderColor="red"
         // iconColor="blue"
-        // customIcon="circle-chevron-down"
+        // customIcon="sun"
       />
 
       <Dialog
@@ -89,11 +89,11 @@ const App = () => {
         onClick={() =>
           onToastAdd({
             toastHeader: "Example toast header",
-            // typeOfToast: "warning",
-            toastDescription: "Example toast description",
+            // typeOfToast: "error",
+            // toastDescription: "Example toast description",
             // size: "small",
             // boxShadow: true,
-            // toastIcon: "circle-chevron-down",
+            // toastIcon: "sun",
             // toastBacgroundColor: "pink",
             // toastFontColor: "black",
           })
@@ -101,10 +101,10 @@ const App = () => {
       >
         Generate toast
       </Button>
-      <ToastContainer toastsPosition="top-left">
+      <ToastContainer toastsPosition="bottom-center">
         <Toast
           toastList={toastList}
-          animationType="grow"
+          animationType="slide"
           onToastRemove={onToastRemove}
         />
       </ToastContainer>
