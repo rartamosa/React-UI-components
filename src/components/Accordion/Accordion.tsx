@@ -50,6 +50,14 @@ const Accordion = ({
     }
   };
 
+  const onAccordionToggle = (index: number): void => {
+    if (show === "many") {
+      onManyAccordionsOpen(index);
+    } else if (show === "single") {
+      onSingleAccordionOpen(index);
+    }
+  };
+
   const determineOpen = (
     index: number,
     accordion: () => React.ReactNode
@@ -84,7 +92,7 @@ const Accordion = ({
           }
         >
           <>
-            <TitleContainer onClick={() => onSingleAccordionOpen(index)}>
+            <TitleContainer onClick={() => onAccordionToggle(index)}>
               <AccordionTitle>{accordion.title}</AccordionTitle>
               <FontAwesomeIcon
                 //   icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-down"]}
