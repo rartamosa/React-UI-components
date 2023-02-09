@@ -18,6 +18,10 @@ import { Button } from "./components/Basic Components/Buttons";
 import Toast from "./components/Toast/Toast";
 import useToast from "./components/Toast/useToast";
 
+// ACCORDION
+import Accordion from "./components/Accordion/Accordion";
+import AccordionDummyData from "./components/Accordion/AccordionDummyData";
+
 const App = () => {
   //  TAGS INPUT
   const [tags, setTags] = useState<string[]>([]);
@@ -114,7 +118,7 @@ const App = () => {
         onClick={() =>
           onToastAdd({
             toastHeader: "Example toast header",
-            typeOfToast: "error",
+            // typeOfToast: "error",
             // toastDescription: "Example toast description",
             // size: "large",
             // boxShadow: true,
@@ -132,6 +136,9 @@ const App = () => {
         onToastRemove={onToastRemove}
         // toastsPosition="top-left"
       />
+
+      {/* ACCORDION */}
+      <Accordion accordionBody={AccordionDummyData} />
     </>
   );
 };

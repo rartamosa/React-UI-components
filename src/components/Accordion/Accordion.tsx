@@ -1,4 +1,29 @@
-// TODO w propsach przekazywać komponent, który ma się wyświetlić w środku accordiona
-// TODO stworzyć tablicę z komponentami i id
+import { useState } from "react";
+import styled, { css } from "styled-components";
 
-export default {};
+import { AccordionProps } from "./AccordionProps";
+
+const Accordion = ({ accordionBody }: AccordionProps) => {
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+
+  return (
+    <div>
+      kurwa
+      {accordionBody.map((accordion) => (
+        <AccordionsContainer key={accordion.id}>
+          <SingleAccordion>{accordion.children}</SingleAccordion>
+        </AccordionsContainer>
+      ))}
+    </div>
+  );
+};
+
+export default Accordion;
+
+export const AccordionsContainer = styled.div`
+  display: flex;
+`;
+
+export const SingleAccordion = styled.div`
+  display: flex;
+`;

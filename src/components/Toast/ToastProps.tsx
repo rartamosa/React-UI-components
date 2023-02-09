@@ -1,5 +1,4 @@
 import { IconName } from "@fortawesome/fontawesome-svg-core";
-import { ReactNode } from "react";
 
 export type ToastProps = {
   toastList: SingleToastProps[];
@@ -28,16 +27,5 @@ export type ToastToAdd = {
 export type SingleToastProps = ToastToAdd & {
   id: string;
 };
-
-// export type ToastContainerProps = {
-//   toastsPosition?:
-//     | "bottom-center"
-//     | "bottom-left"
-//     | "bottom-right"
-//     | "top-center"
-//     | "top-left"
-//     | "top-right";
-//   children: ReactNode;
-// };
 
 export const toastFontColorHex = "#fff";
