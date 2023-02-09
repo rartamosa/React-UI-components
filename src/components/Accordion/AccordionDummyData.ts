@@ -1,4 +1,3 @@
-import React from "react";
 // @ts-ignore
 import uniqid from "uniqid";
 
@@ -9,16 +8,19 @@ const accordionDummyData: AccordionData[] = [
   {
     id: uniqid(),
     children: DummyComponent,
+    title: "Example title1",
     disabled: false,
   },
   {
     id: uniqid(),
     children: DummyComponent,
-    disabled: false,
+    title: "Example title2",
+    // disabled: false,
   },
   {
     id: uniqid(),
     children: DummyComponent,
+    title: "Example title3",
     disabled: true,
   },
 ];

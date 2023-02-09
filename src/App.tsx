@@ -138,7 +138,10 @@ const App = () => {
       />
 
       {/* ACCORDION */}
-      <Accordion accordionBody={accordionDummyData} />
+      <Accordion
+        accordionBody={accordionDummyData}
+        // iconColor="red"
+      />
     </>
   );
 };
