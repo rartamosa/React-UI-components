@@ -20,7 +20,7 @@ import useToast from "./components/Toast/useToast";
 
 // ACCORDION
 import Accordion from "./components/Accordion/Accordion";
-import AccordionDummyData from "./components/Accordion/AccordionDummyData";
+import accordionDummyData from "./components/Accordion/AccordionDummyData";
 
 const App = () => {
   //  TAGS INPUT
@@ -138,7 +138,7 @@ const App = () => {
       />
 
       {/* ACCORDION */}
-      <Accordion accordionBody={AccordionDummyData} />
+      <Accordion accordionBody={accordionDummyData} />
     </>
   );
 };

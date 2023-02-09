@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { JsxEmit } from "typescript";
 
 export type AccordionProps = {
   accordionBody: AccordionData[];
@@ -7,6 +6,6 @@ export type AccordionProps = {
 
 export type AccordionData = {
   id: string;
-  children: ReactNode | JSX.Element;
+  children: () => JSX.Element;
   disabled: boolean;
 };

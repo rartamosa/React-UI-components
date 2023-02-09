@@ -5,10 +5,10 @@ import uniqid from "uniqid";
 import { AccordionData } from "./AccordionProps";
 import DummyComponent from "./DummyComponent";
 
-const AccordionDummyData: AccordionData[] = [
+const accordionDummyData: AccordionData[] = [
   {
     id: uniqid(),
-    children: () => DummyComponent,
+    children: DummyComponent,
     disabled: false,
   },
   {
@@ -23,4 +23,4 @@ const AccordionDummyData: AccordionData[] = [
   },
 ];
 
-export default AccordionDummyData;
+export default accordionDummyData;
