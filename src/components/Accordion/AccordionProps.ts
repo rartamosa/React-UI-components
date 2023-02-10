@@ -3,16 +3,22 @@ import { IconName } from "@fortawesome/free-solid-svg-icons";
 export type AccordionProps = {
   accordionBody: AccordionData[];
   show?: "single" | "many";
-  customIcon?: IconName;
-  //   customIconClosed?: IconName;
-  //   customIconExpanded?: IconName;
+  customIconClosed?: IconName;
+  customIconExpanded?: IconName;
   iconColor?: string;
+  accordionBodyHeight?: string;
+  scroll?: boolean;
+  containerBackgroundColor?: string;
+  accordionBackgroundColor?: string;
+  defaultIndex?: 0 | number;
+  defaultIndexes?: number[];
 };
 
 export type AccordionData = {
   id: string;
   children: () => JSX.Element | JSX.Element[];
   title: string;
+  subtitle?: string;
   disabled?: boolean;
 };
 

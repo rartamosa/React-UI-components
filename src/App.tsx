@@ -130,7 +130,7 @@ const App = () => {
       >
         Generate toast
       </Button>
-      <Toast
+      <Toast // TODO animacja na odmountowanie komponentu
         toastList={toastList}
         animationType="slide"
         onToastRemove={onToastRemove}
@@ -138,10 +138,17 @@ const App = () => {
       />
 
       {/* ACCORDION */}
-      <Accordion
+      <Accordion // TODO animacja na odmountowanie komponentu
         accordionBody={accordionDummyData}
         // iconColor="red"
         // show="many"
+        // customIconClosed="sun"
+        // accordionBodyHeight="100px"
+        // scroll={false}
+        // containerBackgroundColor="red"
+        // accordionBackgroundColor="pink"
+        // defaultIndex={1} //TODO nie działa dla 0
+        // defaultIndexes={[0, 1]}
       />
     </>
   );

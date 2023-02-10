@@ -9,6 +9,7 @@ const accordionDummyData: AccordionData[] = [
     id: uniqid(),
     children: DummyComponent,
     title: "Example title1",
+    subtitle: "Example subtitle",
     disabled: false,
   },
   {
