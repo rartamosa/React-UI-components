@@ -141,6 +141,7 @@ const App = () => {
       <Accordion
         accordionBody={accordionDummyData}
         // iconColor="red"
+        // show="many"
       />
     </>
   );

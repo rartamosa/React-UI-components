@@ -1,7 +1,11 @@
+import { IconName } from "@fortawesome/free-solid-svg-icons";
+
 export type AccordionProps = {
   accordionBody: AccordionData[];
   show?: "single" | "many";
-  customIcon?: string;
+  customIcon?: IconName;
+  //   customIconClosed?: IconName;
+  //   customIconExpanded?: IconName;
   iconColor?: string;
 };
 
@@ -10,7 +14,6 @@ export type AccordionData = {
   children: () => JSX.Element | JSX.Element[];
   title: string;
   disabled?: boolean;
-  //   index?: number;
 };
 
 export const MAIN_LIGHT_COLOR = "#e2e2e2";

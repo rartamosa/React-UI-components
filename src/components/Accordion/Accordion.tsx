@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   AccordionProps,
-  AccordionData,
   MAIN_LIGHT_COLOR,
   SECONDARY_LIGHT_COLOR,
   MAIN_DARK_FONT_COLOR,
@@ -27,9 +26,9 @@ const Accordion = ({
   const [isAccordionExpanded, setIsAccordionExpanded] = useState<
     boolean | number
   >(false);
-  const [areAccordionsExpanded, setAreAccordionsExpanded] = useState<
-    AccordionData[]
-  >([]);
+  const [areAccordionsExpanded, setAreAccordionsExpanded] = useState<number[]>(
+    []
+  );
 
   const onSingleAccordionOpen = (index: number): void => {
     if (isAccordionExpanded === index) {
@@ -37,13 +36,12 @@ const Accordion = ({
     } else {
       setIsAccordionExpanded(index);
     }
-    // setIsAccordionExpanded(isAccordionExpanded ? index : false);
   };
 
   const onManyAccordionsOpen = (index: number): void => {
     if (areAccordionsExpanded.includes(index)) {
       setAreAccordionsExpanded(
-        areAccordionsExpanded.filter((item) => item.index !== index)
+        areAccordionsExpanded.filter((item) => item !== index)
       );
     } else {
       setAreAccordionsExpanded([...areAccordionsExpanded, index]);
@@ -95,12 +93,14 @@ const Accordion = ({
             <TitleContainer onClick={() => onAccordionToggle(index)}>
               <AccordionTitle>{accordion.title}</AccordionTitle>
               <FontAwesomeIcon
-                //   icon={customIcon ? ["fas", customIcon] : ["fas", "chevron-down"]}
                 icon={
-                  isAccordionExpanded
-                    ? ["fas", "chevron-up"]
-                    : ["fas", "chevron-down"]
+                  customIcon ? ["fas", customIcon] : ["fas", "chevron-down"]
                 }
+                // icon={
+                //   isAccordionExpanded
+                //     ? ["fas", "chevron-up"]
+                //     : ["fas", "chevron-down"]
+                // }
                 color={iconColor || MAIN_DARK_FONT_COLOR}
                 style={
                   accordion.disabled
@@ -110,9 +110,6 @@ const Accordion = ({
               />
             </TitleContainer>
 
-            {/* {isAccordionExpanded && (
-            <AccordionBody>{accordion.children()}</AccordionBody>
-          )} */}
             {determineOpen(index, accordion.children)}
           </>
         </SingleAccordion>
@@ -149,7 +146,7 @@ export const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 0;
 `;
 
 export const AccordionTitle = styled.h3`
