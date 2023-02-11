@@ -188,6 +188,12 @@ const App = () => {
         tableRows={tableRows}
         columnNames={dummyColumnNames}
         tableRows2={dummyTableRows} // TODO
+        // headerBackGroundColor="pink"
+        // denseRows={true}
+        // iconColor="blue"
+        // footerIconsColor="orange"
+        // borderColor="red"
+        // borderWidth="10px"
       />
     </>
   );

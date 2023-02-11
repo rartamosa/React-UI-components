@@ -3,6 +3,14 @@ export type TableProps = {
   tableRows: TableRequiredData[];
   columnNames: string[];
   tableRows2: {}[];
+  headerBackGroundColor?: string;
+  denseRows?: boolean;
+  iconColor?: string;
+  footerIconsColor?: string;
+  borderColor?: string;
+  borderWidth?: string;
+  stickyHeader?: boolean; //TODO
+  sortingApplied?: boolean; //TODO
 };
 
 export type TableRequiredData = TableData & {
@@ -18,6 +26,6 @@ export type ColumnNames = {
   subHeader: string;
 };
 
-// export type AdditionalPropertiesAndValues = {
-//   [key: string | number]: string | number | boolean;
-// };
+export const MAIN_LIGHT_COLOR = "#e2e2e2";
+export const MAIN_ICON_COLOR = "#b1b1b1";
+export const MAIN_DARK_FONT_COLOR = "#0A1929";
