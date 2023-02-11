@@ -1,19 +1,19 @@
 export type TableProps = {
   mainHeader: string;
   tableRows: TableRequiredData[];
-  tableSubHeaders: SubHeaders[];
+  columnNames: string[];
+  tableRows2: {}[];
 };
 
 export type TableRequiredData = TableData & {
   id: string;
-  cellName: string;
 };
 
 export type TableData = {
-  [key: string | number]: string | number | boolean;
+  [key: string | number]: string | number;
 };
 
-export type SubHeaders = {
+export type ColumnNames = {
   id: string;
   subHeader: string;
 };

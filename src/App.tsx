@@ -26,11 +26,11 @@ import accordionDummyData from "./components/Accordion/AccordionDummyData";
 
 // TABLE
 import Table from "./components/Table/Table";
+import { TableRequiredData } from "./components/Table/TableProps";
 import {
-  TableRequiredData,
-  SubHeaders,
-  TableData,
-} from "./components/Table/TableProps";
+  dummyColumnNames,
+  dummyTableRows,
+} from "./components/Table/tableDummyData";
 
 const App = () => {
   //  TAGS INPUT
@@ -54,21 +54,6 @@ const App = () => {
   };
 
   // TABLE
-  const createTableSubHeaderNames = (
-    id: string,
-    subHeader: string
-  ): SubHeaders => {
-    return { id, subHeader };
-  };
-
-  const tableSubHeaders = [
-    createTableSubHeaderNames(uniqid(), "Calories"),
-    createTableSubHeaderNames(uniqid(), "Fat (g)"),
-    createTableSubHeaderNames(uniqid(), "Carbs (g)"),
-    createTableSubHeaderNames(uniqid(), "Protein (g)"),
-    createTableSubHeaderNames(uniqid(), "Dupa (g)"),
-  ];
-
   const createTableData = (
     id: string,
     cellName: string,
@@ -199,9 +184,10 @@ const App = () => {
 
       {/* TABLE */}
       <Table
-        mainHeader="Dessert (100g serving)"
+        mainHeader="Example table main header"
         tableRows={tableRows}
-        tableSubHeaders={tableSubHeaders}
+        columnNames={dummyColumnNames}
+        tableRows2={dummyTableRows} // TODO
       />
     </>
   );
