@@ -26,7 +26,11 @@ import accordionDummyData from "./components/Accordion/AccordionDummyData";
 
 // TABLE
 import Table from "./components/Table/Table";
-import { TableRequiredData, SubHeaders } from "./components/Table/TableProps";
+import {
+  TableRequiredData,
+  SubHeaders,
+  TableData,
+} from "./components/Table/TableProps";
 
 const App = () => {
   //  TAGS INPUT
@@ -62,25 +66,27 @@ const App = () => {
     createTableSubHeaderNames(uniqid(), "Fat (g)"),
     createTableSubHeaderNames(uniqid(), "Carbs (g)"),
     createTableSubHeaderNames(uniqid(), "Protein (g)"),
+    createTableSubHeaderNames(uniqid(), "Dupa (g)"),
   ];
 
   const createTableData = (
     id: string,
-    name: string,
+    cellName: string,
     calories: number,
     fat: number,
     carbs: number,
-    protein: number
+    protein: number,
+    dupa: number
   ): TableRequiredData => {
-    return { id, name, calories, fat, carbs, protein };
+    return { id, cellName, calories, fat, carbs, protein, dupa };
   };
 
   const tableRows = [
-    createTableData(uniqid(), "Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createTableData(uniqid(), "Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createTableData(uniqid(), "Eclair", 262, 16.0, 24, 6.0),
-    createTableData(uniqid(), "Cupcake", 305, 3.7, 67, 4.3),
-    createTableData(uniqid(), "Gingerbread", 356, 16.0, 49, 3.9),
+    createTableData(uniqid(), "Frozen yoghurt", 159, 6.0, 24, 4.0, 6),
+    createTableData(uniqid(), "Ice cream sandwich", 237, 9.0, 37, 4.3, 6),
+    createTableData(uniqid(), "Eclair", 262, 16.0, 24, 6.0, 6),
+    createTableData(uniqid(), "Cupcake", 305, 3.7, 67, 4.3, 6),
+    createTableData(uniqid(), "Gingerbread", 356, 16.0, 49, 3.9, 6),
   ];
 
   return (

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+// @ts-ignore
+import uniqid from "uniqid";
 
 import { TableProps, SubHeaders } from "./TableProps";
 
@@ -17,11 +19,17 @@ const Table = ({ mainHeader, tableRows, tableSubHeaders }: TableProps) => {
         <TBody>
           {tableRows.map((row) => (
             <TRow key={row.id} tableSubHeaders={tableSubHeaders}>
-              <TCell style={{ textAlign: "unset" }}>{row.name}</TCell>
-              <TCell>{row.calories}</TCell>
+              <TCell style={{ textAlign: "unset" }}>{row.cellName}</TCell>
+              {Object.entries(row)
+                .filter((cell) => cell[0] !== "id")
+                .filter((cell) => cell[0] !== "cellName")
+                .map((cell) => (
+                  <TCell key={uniqid()}>{cell[1]}</TCell>
+                ))}
+              {/* <TCell>{row.calories}</TCell>
               <TCell>{row.fat}</TCell>
               <TCell>{row.carbs}</TCell>
-              <TCell>{row.protein}</TCell>
+              <TCell>{row.protein}</TCell> */}
             </TRow>
           ))}
         </TBody>

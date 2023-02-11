@@ -6,7 +6,7 @@ export type TableProps = {
 
 export type TableRequiredData = TableData & {
   id: string;
-  name: string;
+  cellName: string;
 };
 
 export type TableData = {
@@ -16,5 +16,8 @@ export type TableData = {
 export type SubHeaders = {
   id: string;
   subHeader: string;
-  //   [key: string | number]: string | number | boolean;
 };
+
+// export type AdditionalPropertiesAndValues = {
+//   [key: string | number]: string | number | boolean;
+// };
