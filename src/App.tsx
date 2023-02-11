@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// @ts-ignore
+import uniqid from "uniqid";
 
 import { faSun } from "@fortawesome/free-solid-svg-icons";
 
@@ -22,6 +24,10 @@ import useToast from "./components/Toast/useToast";
 import Accordion from "./components/Accordion/Accordion";
 import accordionDummyData from "./components/Accordion/AccordionDummyData";
 
+// TABLE
+import Table from "./components/Table/Table";
+import { TableRequiredData, SubHeaders } from "./components/Table/TableProps";
+
 const App = () => {
   //  TAGS INPUT
   const [tags, setTags] = useState<string[]>([]);
@@ -42,6 +48,40 @@ const App = () => {
     console.log("Action cancelled");
     setIsDialogOpen(false);
   };
+
+  // TABLE
+  const createTableSubHeaderNames = (
+    id: string,
+    subHeader: string
+  ): SubHeaders => {
+    return { id, subHeader };
+  };
+
+  const tableSubHeaders = [
+    createTableSubHeaderNames(uniqid(), "Calories"),
+    createTableSubHeaderNames(uniqid(), "Fat (g)"),
+    createTableSubHeaderNames(uniqid(), "Carbs (g)"),
+    createTableSubHeaderNames(uniqid(), "Protein (g)"),
+  ];
+
+  const createTableData = (
+    id: string,
+    name: string,
+    calories: number,
+    fat: number,
+    carbs: number,
+    protein: number
+  ): TableRequiredData => {
+    return { id, name, calories, fat, carbs, protein };
+  };
+
+  const tableRows = [
+    createTableData(uniqid(), "Frozen yoghurt", 159, 6.0, 24, 4.0),
+    createTableData(uniqid(), "Ice cream sandwich", 237, 9.0, 37, 4.3),
+    createTableData(uniqid(), "Eclair", 262, 16.0, 24, 6.0),
+    createTableData(uniqid(), "Cupcake", 305, 3.7, 67, 4.3),
+    createTableData(uniqid(), "Gingerbread", 356, 16.0, 49, 3.9),
+  ];
 
   return (
     <>
@@ -149,6 +189,13 @@ const App = () => {
         // accordionBackgroundColor="pink"
         // defaultIndex={1} //TODO nie działa dla 0
         // defaultIndexes={[0, 1]}
+      />
+
+      {/* TABLE */}
+      <Table
+        mainHeader="Dessert (100g serving)"
+        tableRows={tableRows}
+        tableSubHeaders={tableSubHeaders}
       />
     </>
   );
