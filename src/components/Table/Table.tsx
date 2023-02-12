@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 // @ts-ignore
 import uniqid from "uniqid";
@@ -20,6 +21,8 @@ import {
   MAIN_LIGHT_COLOR,
   MAIN_ICON_COLOR,
   MAIN_DARK_FONT_COLOR,
+  TableData,
+  Order,
 } from "./TableProps";
 
 library.add(
@@ -34,9 +37,8 @@ library.add(
 
 const Table = ({
   mainHeader,
-  tableRows,
   columnNames,
-  tableRows2,
+  tableRows,
   headerBackGroundColor = "#fff",
   denseRows = false,
   iconColor = MAIN_ICON_COLOR,
@@ -44,6 +46,19 @@ const Table = ({
   borderColor = MAIN_DARK_FONT_COLOR,
   borderWidth = "1px",
 }: TableProps) => {
+  const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
+  const [activeSort, setActiveSort] = useState(-1);
+  const [order, setOrder] = useState<Order>("asc");
+
+  useEffect(() => {
+    setTableRowsData(tableRows.map((item) => createTableData(item)));
+  }, []);
+
+  //   useEffect(() => {
+  //     tableRowsData.sort;
+  //   }, [activeSort]);
+  //   w useEffect wykrywam czy zmienia sie index sortowanej kolumny
+
   const createColumnNames2 = (id: string, subHeader: string): ColumnNames => {
     return { id, subHeader };
   };
@@ -52,114 +67,115 @@ const Table = ({
     createColumnNames2(uniqid(), columnName)
   );
 
-  //   console.log(tableRows2);
-
-  const createTableData = (tableRows2: {}[]) => {
-    const arrayOfValues = tableRows2.map((obj) => Object.values(obj));
-    // console.log(arrayOfValues);
-    return { arrayOfValues };
+  const createTableData = (tableRows: TableData): (string | number)[] => {
+    const arrayOfValues = Object.values(tableRows);
+    return arrayOfValues;
   };
 
-  const tableRowsData = tableRows2.map((item) => createTableData([item]));
-  console.log(tableRowsData.map((data) => data.arrayOfValues));
+  const handleSorting = (activeSort: number, sortOrder: Order) => {
+    console.log(activeSort, sortOrder);
+  };
+
+  const handleSortingChange = (
+    columnName: string | number,
+    index: number
+  ): void => {
+    const sortOrder = index === activeSort && order === "asc" ? "desc" : "asc";
+    setActiveSort(index);
+    setOrder(sortOrder);
+    // handleSorting(columnName, sortOrder);
+  };
 
   return (
-    <>
-      <TContainer borderColor={borderColor} borderWidth={borderWidth}>
+    <TOverflow borderColor={borderColor} borderWidth={borderWidth}>
+      <TContainer>
         <THead
           headerBackGroundColor={headerBackGroundColor}
           columnNames={tableColumnNames}
         >
           <TCell style={{ textAlign: "unset" }}>{mainHeader}</TCell>
-          {tableColumnNames.map((cell) => (
-            <ColumnName>
-              <TCell key={cell.id}>{cell.subHeader}</TCell>
+          {tableColumnNames.map((cell, index) => (
+            <ColumnName key={cell.id}>
+              <TCell>{cell.subHeader}</TCell>
               <FontAwesomeIcon
                 icon={["fas", "arrow-up-wide-short"]}
                 style={{ cursor: "pointer" }}
                 color={iconColor}
+                onClick={() => handleSortingChange(cell.subHeader, index)}
               />
             </ColumnName>
           ))}
         </THead>
         <TBody>
-          {tableRows.map((row) => (
-            <TRow
-              key={row.id}
-              columnNames={tableColumnNames}
-              denseRows={denseRows}
-            >
-              <TCell style={{ textAlign: "unset" }}>{row.cellName}</TCell>
-              {Object.entries(row)
-                .filter((cell) => cell[0] !== "id")
-                .filter((cell) => cell[0] !== "cellName")
-                .map((cell) => (
-                  <TCell key={uniqid()}>{cell[1]}</TCell>
-                ))}
-            </TRow>
-          ))}
-          {/* {tableRowsData.map((row) => (
+          {tableRowsData.map((row) => (
             <TRow key={uniqid()} columnNames={tableColumnNames}>
-              {row.arrayOfValues.map((value) => (
+              {row.map((value) => (
                 <TCell key={uniqid()}>{value}</TCell>
               ))}
             </TRow>
-          ))} */}
+          ))}
         </TBody>
         <TFooter>
-          <FooterCell>
-            <span>Rows per page:</span>
-            <RowsSelect>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="all">All</option>
-            </RowsSelect>
-          </FooterCell>
-          <FooterCell>1–5 of 13</FooterCell>
-          <FooterCell>
-            <FontAwesomeIcon
-              icon={["fas", "angles-left"]}
-              style={{ cursor: "pointer" }}
-              size="lg"
-              color={footerIconsColor ? footerIconsColor : iconColor}
-            />
-            <FontAwesomeIcon
-              icon={["fas", "angle-left"]}
-              style={{ cursor: "pointer" }}
-              size="lg"
-              color={footerIconsColor ? footerIconsColor : iconColor}
-            />
-            <FontAwesomeIcon
-              icon={["fas", "angle-right"]}
-              style={{ cursor: "pointer" }}
-              size="lg"
-              color={footerIconsColor ? footerIconsColor : iconColor}
-            />
-            <FontAwesomeIcon
-              icon={["fas", "angles-right"]}
-              style={{ cursor: "pointer" }}
-              size="lg"
-              color={footerIconsColor ? footerIconsColor : iconColor}
-            />
-          </FooterCell>
+          <div style={{ position: "sticky", right: "0" }}>
+            <FooterCell>
+              <span>Rows per page:</span>
+              <RowsSelect>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="all">All</option>
+              </RowsSelect>
+            </FooterCell>
+            <FooterCell>1–5 of 13</FooterCell>
+            <FooterCell>
+              <FontAwesomeIcon
+                icon={["fas", "angles-left"]}
+                style={{ cursor: "pointer" }}
+                size="lg"
+                color={footerIconsColor ? footerIconsColor : iconColor}
+              />
+              <FontAwesomeIcon
+                icon={["fas", "angle-left"]}
+                style={{ cursor: "pointer" }}
+                size="lg"
+                color={footerIconsColor ? footerIconsColor : iconColor}
+              />
+              <FontAwesomeIcon
+                icon={["fas", "angle-right"]}
+                style={{ cursor: "pointer" }}
+                size="lg"
+                color={footerIconsColor ? footerIconsColor : iconColor}
+              />
+              <FontAwesomeIcon
+                icon={["fas", "angles-right"]}
+                style={{ cursor: "pointer" }}
+                size="lg"
+                color={footerIconsColor ? footerIconsColor : iconColor}
+              />
+            </FooterCell>
+          </div>
         </TFooter>
       </TContainer>
-    </>
+    </TOverflow>
   );
 };
 
 export default Table;
 
-export const TContainer = styled.div<{
+export const TOverflow = styled.div<{
   borderColor?: string;
   borderWidth?: string;
 }>`
+  max-width: 70%;
+  overflow: auto;
   border: ${(props) => props.borderWidth} solid ${(props) => props.borderColor};
+  border-radius: 8px;
+`;
+
+export const TContainer = styled.div`
   padding: 10px;
   cursor: default;
-  max-width: 70%;
-  border-radius: 8px;
+  width: max-content;
 `;
 
 export const THead = styled.div<{
@@ -174,10 +190,12 @@ export const THead = styled.div<{
   gap: 15px;
   padding: 6px 0;
   background-color: ${(props) => props.headerBackGroundColor};
+  font-weight: 700;
 `;
 
 export const TBody = styled.div`
   overflow-x: auto;
+  height: 200px;
 `;
 
 export const TRow = styled.div<{
@@ -212,11 +230,17 @@ export const TCell = styled.div`
 `;
 
 export const TFooter = styled.div`
+  font-size: 14px;
+  position: relative;
+`;
+
+export const TFooterContainer = styled.div`
+  position: sticky;
+  right: 0px;
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 40px;
-  font-size: 14px;
 `;
 
 export const FooterCell = styled.div`

@@ -1,8 +1,8 @@
 export type TableProps = {
   mainHeader: string;
-  tableRows: TableRequiredData[];
+  // tableRows: TableRequiredData[];
   columnNames: string[];
-  tableRows2: {}[];
+  tableRows: {}[];
   headerBackGroundColor?: string;
   denseRows?: boolean;
   iconColor?: string;
@@ -25,6 +25,8 @@ export type ColumnNames = {
   id: string;
   subHeader: string;
 };
+
+export type Order = "asc" | "desc"; // TODO
 
 export const MAIN_LIGHT_COLOR = "#e2e2e2";
 export const MAIN_ICON_COLOR = "#b1b1b1";
