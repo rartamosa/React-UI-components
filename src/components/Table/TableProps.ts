@@ -1,15 +1,12 @@
 export type TableProps = {
-  // mainHeader: string;
-  // tableRows: TableRequiredData[];
   columnNames: string[];
   tableRows: {}[];
   headerBackGroundColor?: string;
   denseRows?: boolean;
   iconColor?: string;
-  footerIconsColor?: string;
   borderColor?: string;
   borderWidth?: string;
-  stickyHeader?: boolean; //TODO
+  allowSorting?: boolean;
 };
 
 export type TableRequiredData = TableData & {

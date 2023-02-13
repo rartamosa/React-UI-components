@@ -5,16 +5,22 @@ export const dummyColumnNames = [
   "Carbs (g)",
   "Protein (g)",
   "Dupa (g)",
+  "Harry",
+  "Dupper",
+  "Nanana",
 ];
 
 export const dummyTableRows = [
   {
     rowName: "Frozen yoghurt",
     calories: 159,
-    fat: "yes",
+    fat: "6.0",
     carbs: 24,
     protein: 4.0,
     dupa: 6,
+    harry: "Harry1",
+    dupper: "Dupper1",
+    nanana: "nanana1",
   },
   {
     rowName: "Ice cream sandwich",
@@ -23,6 +29,9 @@ export const dummyTableRows = [
     carbs: 37,
     protein: 4.3,
     dupa: 6,
+    harry: "Harry2",
+    dupper: "Dupper2",
+    nanana: "nanana2",
   },
   {
     rowName: "Eclair",
@@ -31,6 +40,9 @@ export const dummyTableRows = [
     carbs: 24,
     protein: 6.0,
     dupa: 6,
+    harry: "Harry3",
+    dupper: "Dupper3",
+    nanana: "nanana3",
   },
   {
     rowName: "Cupcake",
@@ -39,6 +51,9 @@ export const dummyTableRows = [
     carbs: 67,
     protein: 4.3,
     dupa: 6,
+    harry: "Harry4",
+    dupper: "Dupper4",
+    nanana: "nanana4",
   },
   {
     rowName: "Gingerbread",
@@ -47,6 +62,9 @@ export const dummyTableRows = [
     carbs: 49,
     protein: 3.9,
     dupa: 6,
+    harry: "Harry5",
+    dupper: "Dupper5",
+    nanana: "nanana5",
   },
   {
     rowName: "Honeycomb",
@@ -55,6 +73,9 @@ export const dummyTableRows = [
     carbs: 87,
     protein: 6.5,
     dupa: 6,
+    harry: "Harry6",
+    dupper: "Dupper6",
+    nanana: "nanana6",
   },
   {
     rowName: "Ice cream sandwich",
@@ -63,6 +84,9 @@ export const dummyTableRows = [
     carbs: 37,
     protein: 4.3,
     dupa: 6,
+    harry: "Harry7",
+    dupper: "Dupper7",
+    nanana: "nanana7",
   },
   {
     rowName: "Jelly Bean",
@@ -71,6 +95,9 @@ export const dummyTableRows = [
     carbs: 94,
     protein: 0,
     dupa: 6,
+    harry: "Harry8",
+    dupper: "Dupper8",
+    nanana: "nanana8",
   },
   {
     rowName: "KitKat",
@@ -79,6 +106,9 @@ export const dummyTableRows = [
     carbs: 65,
     protein: 7,
     dupa: 6,
+    harry: "Harry9",
+    dupper: "Dupper9",
+    nanana: "nanana9",
   },
   {
     rowName: "Lollipop",
@@ -87,6 +117,9 @@ export const dummyTableRows = [
     carbs: 98,
     protein: 0,
     dupa: 6,
+    harry: "Harry10",
+    dupper: "Dupper10",
+    nanana: "nanana10",
   },
   {
     rowName: "Marshmallow",
@@ -95,6 +128,9 @@ export const dummyTableRows = [
     carbs: 81,
     protein: 2,
     dupa: 6,
+    harry: "Harry11",
+    dupper: "Dupper11",
+    nanana: "nanana11",
   },
   {
     rowName: "Nougat",
@@ -103,6 +139,9 @@ export const dummyTableRows = [
     carbs: 49,
     protein: 3.9,
     dupa: 6,
+    harry: "Harry12",
+    dupper: "Dupper12",
+    nanana: "nanana12",
   },
   {
     rowName: "Oreo",
@@ -111,5 +150,8 @@ export const dummyTableRows = [
     carbs: 63,
     protein: 4,
     dupa: 6,
+    harry: "Harry13",
+    dupper: "Dupper13",
+    nanana: "nanana13",
   },
 ];

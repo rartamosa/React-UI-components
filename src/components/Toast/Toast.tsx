@@ -57,6 +57,7 @@ const Toast = ({
             boxShadow={boxShadow}
             animationType={animationType}
             isUnmounting={isUnmounting}
+            toastsPosition={toastsPosition}
           >
             {typeOfToast === "success" ||
               (typeOfToast === undefined && (

@@ -7,10 +7,6 @@ import {
   fas,
   faArrowUpWideShort,
   faArrowDownWideShort,
-  faAnglesLeft,
-  faAngleLeft,
-  faAngleRight,
-  faAnglesRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,29 +21,19 @@ import {
   Order,
 } from "./TableProps";
 
-library.add(
-  fas,
-  faArrowUpWideShort,
-  faArrowDownWideShort,
-  faAnglesLeft,
-  faAngleLeft,
-  faAngleRight,
-  faAnglesRight
-);
+library.add(fas, faArrowUpWideShort, faArrowDownWideShort);
 
 const Table = ({
-  //   mainHeader,
   columnNames,
   tableRows,
   headerBackGroundColor = "#fff",
   denseRows = false,
   iconColor = MAIN_ICON_COLOR,
-  footerIconsColor,
   borderColor = MAIN_DARK_FONT_COLOR,
   borderWidth = "1px",
+  allowSorting = true,
 }: TableProps) => {
   const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
-  //   const [tableRowsData, setTableRowsData] = useState<any[][]>([]);
 
   const [activeSort, setActiveSort] = useState<{
     activeIndex: number;
@@ -56,7 +42,7 @@ const Table = ({
 
   useEffect(() => {
     setTableRowsData(tableRows.map((item) => createTableData(item)));
-  }, []);
+  }, [tableRows]);
 
   const createColumnNames = (id: string, subHeader: string): ColumnNames => {
     return { id, subHeader };
@@ -119,72 +105,38 @@ const Table = ({
           {tableColumnNames.map((cell, index) => (
             <ColumnName key={cell.id}>
               <TCell>{cell.subHeader}</TCell>
-              <FontAwesomeIcon
-                icon={[
-                  "fas",
-                  `${
-                    activeSort.order === "asc" &&
-                    activeSort.activeIndex === index
-                      ? "arrow-up-wide-short"
-                      : "arrow-down-wide-short"
-                  }`,
-                ]}
-                style={{ cursor: "pointer" }}
-                color={iconColor}
-                onClick={() => onColumnSelect(index)}
-              />
+              {allowSorting && (
+                <FontAwesomeIcon
+                  icon={[
+                    "fas",
+                    `${
+                      activeSort.order === "asc" &&
+                      activeSort.activeIndex === index
+                        ? "arrow-down-wide-short"
+                        : "arrow-up-wide-short"
+                    }`,
+                  ]}
+                  style={{ cursor: "pointer" }}
+                  color={iconColor}
+                  onClick={() => onColumnSelect(index)}
+                />
+              )}
             </ColumnName>
           ))}
         </THead>
         <TBody>
           {tableRowsData.sort(sortTableRowsData).map((row) => (
-            <TRow key={uniqid()} columnNames={tableColumnNames}>
+            <TRow
+              key={uniqid()}
+              columnNames={tableColumnNames}
+              denseRows={denseRows}
+            >
               {row.map((value) => (
                 <TCell key={uniqid()}>{value}</TCell>
               ))}
             </TRow>
           ))}
         </TBody>
-        {/* <TFooter>
-          <TFooterContainer>
-            <FooterCell>
-              <span>Rows per page:</span>
-              <RowsSelect>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="all">All</option>
-              </RowsSelect>
-            </FooterCell>
-            <FooterCell>1–5 of 13</FooterCell>
-            <FooterCell>
-              <FontAwesomeIcon
-                icon={["fas", "angles-left"]}
-                style={{ cursor: "pointer" }}
-                size="lg"
-                color={footerIconsColor ? footerIconsColor : iconColor}
-              />
-              <FontAwesomeIcon
-                icon={["fas", "angle-left"]}
-                style={{ cursor: "pointer" }}
-                size="lg"
-                color={footerIconsColor ? footerIconsColor : iconColor}
-              />
-              <FontAwesomeIcon
-                icon={["fas", "angle-right"]}
-                style={{ cursor: "pointer" }}
-                size="lg"
-                color={footerIconsColor ? footerIconsColor : iconColor}
-              />
-              <FontAwesomeIcon
-                icon={["fas", "angles-right"]}
-                style={{ cursor: "pointer" }}
-                size="lg"
-                color={footerIconsColor ? footerIconsColor : iconColor}
-              />
-            </FooterCell>
-          </TFooterContainer>
-        </TFooter> */}
       </TContainer>
     </TOverflow>
   );
@@ -200,6 +152,9 @@ export const TOverflow = styled.div<{
   overflow: auto;
   border: ${(props) => props.borderWidth} solid ${(props) => props.borderColor};
   border-radius: 8px;
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 export const TContainer = styled.div`
@@ -221,6 +176,14 @@ export const THead = styled.div<{
   padding: 6px 0;
   background-color: ${(props) => props.headerBackGroundColor};
   font-weight: 700;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr repeat(
+        ${(props) => props.columnNames.length - 1},
+        minmax(15px, 1fr)
+      );
+    gap: 0;
+    font-size: 14px;
+  }
 `;
 
 export const TBody = styled.div`
@@ -246,6 +209,14 @@ export const TRow = styled.div<{
   &:hover {
     background-color: ${MAIN_LIGHT_COLOR};
   }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr repeat(
+        ${(props) => props.columnNames.length - 1},
+        minmax(15px, 1fr)
+      );
+    gap: 0;
+    font-size: 13px;
+  }
 `;
 
 export const ColumnName = styled.div`
@@ -257,29 +228,4 @@ export const ColumnName = styled.div`
 
 export const TCell = styled.div`
   text-align: right;
-`;
-
-export const TFooter = styled.div`
-  font-size: 14px;
-  position: relative;
-`;
-
-export const TFooterContainer = styled.div`
-  position: sticky;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  gap: 40px;
-`;
-
-export const FooterCell = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-export const RowsSelect = styled.select`
-  font-family: inherit;
-  border: none;
-  cursor: pointer;
 `;

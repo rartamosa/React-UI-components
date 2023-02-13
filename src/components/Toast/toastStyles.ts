@@ -10,6 +10,13 @@ export const SingleToast = styled.div<{
   animationType?: "fadein" | "grow" | "slide";
   animation?: string;
   isUnmounting?: boolean;
+  toastsPosition?:
+    | "bottom-center"
+    | "bottom-left"
+    | "bottom-right"
+    | "top-center"
+    | "top-left"
+    | "top-right";
 }>`
   background-color: ${(props) => props.toastBacgroundColor || "#6cbb5a"};
   padding: 10px;
@@ -18,7 +25,8 @@ export const SingleToast = styled.div<{
   display: flex;
   gap: 10px;
 
-  animation-name: ${(props) => determineAnimationType(props.animationType)};
+  animation-name: ${(props) =>
+    determineAnimationType(props.animationType, props.toastsPosition)};
   animation-duration: 0.2s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
@@ -166,6 +174,7 @@ export const ToastContainerDiv = styled.div<{
       top: 0;
       bottom: unset;
       margin: 10px 0 0 0;
+      flex-direction: column;
     `}
   ${(props) =>
     props.toastsPosition === "top-left" &&
@@ -174,6 +183,7 @@ export const ToastContainerDiv = styled.div<{
       bottom: unset;
       left: 0;
       margin: 10px 0 0 10px;
+      flex-direction: column;
     `}
   ${(props) =>
     props.toastsPosition === "top-right" &&
@@ -182,5 +192,6 @@ export const ToastContainerDiv = styled.div<{
       bottom: unset;
       right: 0;
       margin: 10px 10px 0 0;
+      flex-direction: column;
     `}
 `;

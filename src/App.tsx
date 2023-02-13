@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // @ts-ignore
-import uniqid from "uniqid";
 
 import { faSun } from "@fortawesome/free-solid-svg-icons";
 
@@ -26,7 +25,6 @@ import accordionDummyData from "./components/Accordion/AccordionDummyData";
 
 // TABLE
 import Table from "./components/Table/Table";
-import { TableRequiredData } from "./components/Table/TableProps";
 import {
   dummyColumnNames,
   dummyTableRows,
@@ -140,15 +138,15 @@ const App = () => {
       >
         Generate toast
       </Button>
-      <Toast // TODO animacja na odmountowanie komponentu
+      <Toast //TODO X do zamknięcia toasta pojawia się tylko przy pierwszym toaście
         toastList={toastList}
-        animationType="slide"
+        // animationType="slide"
         onToastRemove={onToastRemove}
-        toastsPosition="top-left"
+        // toastsPosition="top-center"
       />
 
       {/* ACCORDION */}
-      <Accordion // TODO animacja na odmountowanie komponentu
+      <Accordion
         accordionBody={accordionDummyData}
         // iconColor="red"
         // show="many"
@@ -172,6 +170,7 @@ const App = () => {
         // footerIconsColor="orange"
         // borderColor="red"
         // borderWidth="10px"
+        // allowSorting={false}
       />
     </>
   );

@@ -27,6 +27,13 @@ export type ToastToAdd = {
 export type SingleToastProps = ToastToAdd & {
   id: string;
   isUnmounting?: boolean;
+  toastsPosition?:
+    | "bottom-center"
+    | "bottom-left"
+    | "bottom-right"
+    | "top-center"
+    | "top-left"
+    | "top-right";
 };
 
 export const toastFontColorHex = "#fff";

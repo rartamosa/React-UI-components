@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 import { MAIN_LIGHT_COLOR } from "./AccordionProps";
 
@@ -12,6 +12,9 @@ export const AccordionsContainer = styled.div<{
   padding: 10px;
   border-radius: 8px;
   width: 60%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const SingleAccordion = styled.div<{
@@ -37,20 +40,16 @@ export const TitleContainer = styled.div`
 
 export const AccordionTitle = styled.h3`
   margin: 0;
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
 `;
 
-export const AccordionSubtitle = styled.span``;
-
-export const slide = keyframes`
-  from {
-      opacity: 0;
-      margin-top: -10px;
-    }
-    to {
-      opacity: 1;
-      margin-top: 0px;
-    }
-  `;
+export const AccordionSubtitle = styled.span`
+  @media (max-width: 768px) {
+    font-size: 11px;
+  }
+`;
 
 export const AccordionBody = styled.div<{
   accordionBodyHeight?: string;
