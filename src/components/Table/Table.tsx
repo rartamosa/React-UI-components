@@ -36,7 +36,7 @@ library.add(
 );
 
 const Table = ({
-  mainHeader,
+  //   mainHeader,
   columnNames,
   tableRows,
   headerBackGroundColor = "#fff",
@@ -46,25 +46,22 @@ const Table = ({
   borderColor = MAIN_DARK_FONT_COLOR,
   borderWidth = "1px",
 }: TableProps) => {
-  const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
+  //   const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
+  const [tableRowsData, setTableRowsData] = useState<any[][]>([]);
+
   const [activeSort, setActiveSort] = useState(-1);
-  const [order, setOrder] = useState<Order>("asc");
+  //   const [order, setOrder] = useState<Order>("asc");
 
   useEffect(() => {
     setTableRowsData(tableRows.map((item) => createTableData(item)));
   }, []);
 
-  //   useEffect(() => {
-  //     tableRowsData.sort;
-  //   }, [activeSort]);
-  //   w useEffect wykrywam czy zmienia sie index sortowanej kolumny
-
-  const createColumnNames2 = (id: string, subHeader: string): ColumnNames => {
+  const createColumnNames = (id: string, subHeader: string): ColumnNames => {
     return { id, subHeader };
   };
 
   const tableColumnNames = columnNames.map((columnName) =>
-    createColumnNames2(uniqid(), columnName)
+    createColumnNames(uniqid(), columnName)
   );
 
   const createTableData = (tableRows: TableData): (string | number)[] => {
@@ -72,18 +69,24 @@ const Table = ({
     return arrayOfValues;
   };
 
-  const handleSorting = (activeSort: number, sortOrder: Order) => {
-    console.log(activeSort, sortOrder);
+  const onColumnSelect = (index: number): void => {
+    setActiveSort(index);
   };
 
-  const handleSortingChange = (
-    columnName: string | number,
-    index: number
-  ): void => {
-    const sortOrder = index === activeSort && order === "asc" ? "desc" : "asc";
-    setActiveSort(index);
-    setOrder(sortOrder);
-    // handleSorting(columnName, sortOrder);
+  const sortTableRowsData = (a: any[], b: any[]): number => {
+    if (
+      typeof a[activeSort] === "number" &&
+      typeof b[activeSort] === "number"
+    ) {
+      return a[activeSort] - b[activeSort];
+    } else if (
+      typeof a[activeSort] === "string" &&
+      typeof b[activeSort] === "string"
+    ) {
+      return a[activeSort].localeCompare(b[activeSort]);
+    } else {
+      return a[activeSort] < b[activeSort] ? -1 : 1;
+    }
   };
 
   return (
@@ -93,7 +96,7 @@ const Table = ({
           headerBackGroundColor={headerBackGroundColor}
           columnNames={tableColumnNames}
         >
-          <TCell style={{ textAlign: "unset" }}>{mainHeader}</TCell>
+          {/* <TCell style={{ textAlign: "unset" }}>{mainHeader}</TCell> */}
           {tableColumnNames.map((cell, index) => (
             <ColumnName key={cell.id}>
               <TCell>{cell.subHeader}</TCell>
@@ -101,13 +104,13 @@ const Table = ({
                 icon={["fas", "arrow-up-wide-short"]}
                 style={{ cursor: "pointer" }}
                 color={iconColor}
-                onClick={() => handleSortingChange(cell.subHeader, index)}
+                onClick={() => onColumnSelect(index)}
               />
             </ColumnName>
           ))}
         </THead>
         <TBody>
-          {tableRowsData.map((row) => (
+          {tableRowsData.sort(sortTableRowsData).map((row) => (
             <TRow key={uniqid()} columnNames={tableColumnNames}>
               {row.map((value) => (
                 <TCell key={uniqid()}>{value}</TCell>
@@ -116,7 +119,7 @@ const Table = ({
           ))}
         </TBody>
         <TFooter>
-          <div style={{ position: "sticky", right: "0" }}>
+          <TFooterContainer>
             <FooterCell>
               <span>Rows per page:</span>
               <RowsSelect>
@@ -153,7 +156,7 @@ const Table = ({
                 color={footerIconsColor ? footerIconsColor : iconColor}
               />
             </FooterCell>
-          </div>
+          </TFooterContainer>
         </TFooter>
       </TContainer>
     </TOverflow>
@@ -184,7 +187,7 @@ export const THead = styled.div<{
 }>`
   display: grid;
   grid-template-columns: 2fr repeat(
-      ${(props) => props.columnNames.length},
+      ${(props) => props.columnNames.length - 1},
       minmax(15px, 1fr)
     );
   gap: 15px;
@@ -204,7 +207,7 @@ export const TRow = styled.div<{
 }>`
   display: grid;
   grid-template-columns: 2fr repeat(
-      ${(props) => props.columnNames.length},
+      ${(props) => props.columnNames.length - 1},
       minmax(15px, 1fr)
     );
   gap: 15px;
@@ -236,7 +239,7 @@ export const TFooter = styled.div`
 
 export const TFooterContainer = styled.div`
   position: sticky;
-  right: 0px;
+  right: 0;
   display: flex;
   align-items: center;
   justify-content: end;

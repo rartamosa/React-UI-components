@@ -163,7 +163,7 @@ const App = () => {
 
       {/* TABLE */}
       <Table
-        mainHeader="Example table main header"
+        // mainHeader="Example table main header"
         columnNames={dummyColumnNames}
         tableRows={dummyTableRows}
         // headerBackGroundColor="pink"

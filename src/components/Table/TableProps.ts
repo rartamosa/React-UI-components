@@ -1,5 +1,5 @@
 export type TableProps = {
-  mainHeader: string;
+  // mainHeader: string;
   // tableRows: TableRequiredData[];
   columnNames: string[];
   tableRows: {}[];
