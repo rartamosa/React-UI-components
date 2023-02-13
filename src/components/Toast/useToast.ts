@@ -20,7 +20,7 @@ const useToast = (
       }
     }, timeout);
     return () => clearInterval(intervalId);
-  }, [toastList]);
+  }, [toastList, timeout]);
 
   const onToastAdd = (toastToAdd: ToastToAdd): void => {
     setToastList([
