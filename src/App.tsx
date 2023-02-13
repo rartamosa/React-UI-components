@@ -144,7 +144,7 @@ const App = () => {
         toastList={toastList}
         animationType="slide"
         onToastRemove={onToastRemove}
-        // toastsPosition="top-left"
+        toastsPosition="top-left"
       />
 
       {/* ACCORDION */}

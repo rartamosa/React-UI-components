@@ -11,7 +11,7 @@ export const dummyTableRows = [
   {
     rowName: "Frozen yoghurt",
     calories: 159,
-    fat: 6.0,
+    fat: "yes",
     carbs: 24,
     protein: 4.0,
     dupa: 6,

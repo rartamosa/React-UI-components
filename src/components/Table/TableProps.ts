@@ -10,7 +10,6 @@ export type TableProps = {
   borderColor?: string;
   borderWidth?: string;
   stickyHeader?: boolean; //TODO
-  sortingApplied?: boolean; //TODO
 };
 
 export type TableRequiredData = TableData & {
@@ -26,7 +25,7 @@ export type ColumnNames = {
   subHeader: string;
 };
 
-export type Order = "asc" | "desc"; // TODO
+export type Order = "asc" | "desc";
 
 export const MAIN_LIGHT_COLOR = "#e2e2e2";
 export const MAIN_ICON_COLOR = "#b1b1b1";

@@ -9,6 +9,7 @@ export const SingleToast = styled.div<{
   boxShadow?: boolean;
   animationType?: "fadein" | "grow" | "slide";
   animation?: string;
+  isUnmounting?: boolean;
 }>`
   background-color: ${(props) => props.toastBacgroundColor || "#6cbb5a"};
   padding: 10px;
@@ -21,6 +22,11 @@ export const SingleToast = styled.div<{
   animation-duration: 0.2s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
+  ${(props) =>
+    props.isUnmounting &&
+    css`
+      animation-direction: reverse;
+    `}
 
   ${(props) =>
     props.boxShadow &&

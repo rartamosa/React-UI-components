@@ -46,11 +46,13 @@ const Table = ({
   borderColor = MAIN_DARK_FONT_COLOR,
   borderWidth = "1px",
 }: TableProps) => {
-  //   const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
-  const [tableRowsData, setTableRowsData] = useState<any[][]>([]);
+  const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
+  //   const [tableRowsData, setTableRowsData] = useState<any[][]>([]);
 
-  const [activeSort, setActiveSort] = useState(-1);
-  //   const [order, setOrder] = useState<Order>("asc");
+  const [activeSort, setActiveSort] = useState<{
+    activeIndex: number;
+    order: Order;
+  }>({ activeIndex: -1, order: "asc" });
 
   useEffect(() => {
     setTableRowsData(tableRows.map((item) => createTableData(item)));
@@ -70,22 +72,40 @@ const Table = ({
   };
 
   const onColumnSelect = (index: number): void => {
-    setActiveSort(index);
+    if (activeSort.activeIndex === index) {
+      setActiveSort({
+        ...activeSort,
+        order: activeSort.order === "asc" ? "desc" : "asc",
+      });
+    } else {
+      setActiveSort({
+        activeIndex: index,
+        order: "asc",
+      });
+    }
   };
 
-  const sortTableRowsData = (a: any[], b: any[]): number => {
+  const sortTableRowsData = (
+    a: (string | number)[],
+    b: (string | number)[]
+  ): number => {
+    const { activeIndex, order } = activeSort;
+
     if (
-      typeof a[activeSort] === "number" &&
-      typeof b[activeSort] === "number"
+      typeof a[activeIndex] === "number" &&
+      typeof b[activeIndex] === "number"
     ) {
-      return a[activeSort] - b[activeSort];
-    } else if (
-      typeof a[activeSort] === "string" &&
-      typeof b[activeSort] === "string"
-    ) {
-      return a[activeSort].localeCompare(b[activeSort]);
+      return order === "asc"
+        ? +a[activeIndex] - +b[activeIndex]
+        : +b[activeIndex] - +a[activeIndex];
     } else {
-      return a[activeSort] < b[activeSort] ? -1 : 1;
+      return order === "asc"
+        ? a[activeIndex] < b[activeIndex]
+          ? -1
+          : 1
+        : b[activeIndex] < a[activeIndex]
+        ? -1
+        : 1;
     }
   };
 
@@ -96,12 +116,19 @@ const Table = ({
           headerBackGroundColor={headerBackGroundColor}
           columnNames={tableColumnNames}
         >
-          {/* <TCell style={{ textAlign: "unset" }}>{mainHeader}</TCell> */}
           {tableColumnNames.map((cell, index) => (
             <ColumnName key={cell.id}>
               <TCell>{cell.subHeader}</TCell>
               <FontAwesomeIcon
-                icon={["fas", "arrow-up-wide-short"]}
+                icon={[
+                  "fas",
+                  `${
+                    activeSort.order === "asc" &&
+                    activeSort.activeIndex === index
+                      ? "arrow-up-wide-short"
+                      : "arrow-down-wide-short"
+                  }`,
+                ]}
                 style={{ cursor: "pointer" }}
                 color={iconColor}
                 onClick={() => onColumnSelect(index)}
@@ -118,7 +145,7 @@ const Table = ({
             </TRow>
           ))}
         </TBody>
-        <TFooter>
+        {/* <TFooter>
           <TFooterContainer>
             <FooterCell>
               <span>Rows per page:</span>
@@ -157,7 +184,7 @@ const Table = ({
               />
             </FooterCell>
           </TFooterContainer>
-        </TFooter>
+        </TFooter> */}
       </TContainer>
     </TOverflow>
   );

@@ -33,7 +33,7 @@ const Accordion = ({
   customIconExpanded,
   customIconClosed,
   iconColor,
-  accordionBodyHeight = "fit-content",
+  accordionBodyHeight = "100px",
   scroll = true,
   containerBackgroundColor = MAIN_LIGHT_COLOR,
   accordionBackgroundColor = "#fff",
@@ -88,7 +88,11 @@ const Accordion = ({
           </AccordionBody>
         );
       } else {
-        return null;
+        return (
+          <AccordionBody accordionBodyHeight="0" scroll={scroll}>
+            {accordion()}
+          </AccordionBody>
+        );
       }
     } else {
       if (isAccordionExpanded === index) {
@@ -101,7 +105,11 @@ const Accordion = ({
           </AccordionBody>
         );
       } else {
-        return null;
+        return (
+          <AccordionBody accordionBodyHeight="0" scroll={scroll}>
+            {accordion()}
+          </AccordionBody>
+        );
       }
     }
   };

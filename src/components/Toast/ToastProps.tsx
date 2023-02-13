@@ -26,6 +26,7 @@ export type ToastToAdd = {
 
 export type SingleToastProps = ToastToAdd & {
   id: string;
+  isUnmounting?: boolean;
 };
 
 export const toastFontColorHex = "#fff";

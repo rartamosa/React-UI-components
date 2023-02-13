@@ -46,6 +46,7 @@ const Toast = ({
           typeOfToast,
           size,
           boxShadow,
+          isUnmounting,
         }) => (
           <SingleToast
             key={id}
@@ -55,6 +56,7 @@ const Toast = ({
             size={size}
             boxShadow={boxShadow}
             animationType={animationType}
+            isUnmounting={isUnmounting}
           >
             {typeOfToast === "success" ||
               (typeOfToast === undefined && (

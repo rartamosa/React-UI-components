@@ -57,10 +57,7 @@ export const AccordionBody = styled.div<{
   scroll?: boolean;
 }>`
   cursor: default;
-  animation-name: ${slide};
-  animation-duration: 0.2s;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-  height: ${(props) => props.accordionBodyHeight};
+  max-height: ${(props) => props.accordionBodyHeight};
   overflow-y: ${(props) => (props.scroll ? "scroll" : "hidden")};
+  transition: max-height 0.3s;
 `;

@@ -33,8 +33,19 @@ const useToast = (
   };
 
   const onToastRemove = (id: string): void => {
-    const updatedToastList = toastList.filter((toast) => toast.id !== id);
-    setToastList(updatedToastList);
+    setToastList(
+      toastList.map((item) => {
+        if (item.id === id) {
+          return { ...item, isUnmounting: true };
+        } else {
+          return item;
+        }
+      })
+    );
+    setTimeout(() => {
+      const updatedToastList = toastList.filter((toast) => toast.id !== id);
+      setToastList(updatedToastList);
+    }, 200);
   };
 
   return [toastList, onToastAdd, onToastRemove];
