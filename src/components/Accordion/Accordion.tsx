@@ -42,7 +42,7 @@ const Accordion = ({
 }: AccordionProps) => {
   const [isAccordionExpanded, setIsAccordionExpanded] = useState<
     boolean | number
-  >(defaultIndex ? defaultIndex : false);
+  >(defaultIndex !== undefined ? defaultIndex : false);
   const [areAccordionsExpanded, setAreAccordionsExpanded] = useState<number[]>(
     defaultIndexes ? defaultIndexes : []
   );

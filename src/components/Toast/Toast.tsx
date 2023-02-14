@@ -4,19 +4,21 @@ import {
   faCircleExclamation,
   faTriangleExclamation,
   faCircleInfo,
+  faCircleXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { ToastProps, toastFontColorHex } from "./ToastProps";
 
-import BasicCloseButton from "../Basic Components/BasicCloseButton";
 import {
   SingleToast,
   ToastDescriptionContainer,
   ToastHeader,
   ToastCopy,
   ToastContainerDiv,
+  HeaderContainer,
+  ToastCloseButton,
+  ToastIcon,
 } from "./toastStyles";
 
 library.add(
@@ -24,7 +26,8 @@ library.add(
   faCircleCheck,
   faCircleExclamation,
   faTriangleExclamation,
-  faCircleInfo
+  faCircleInfo,
+  faCircleXmark
 );
 
 const Toast = ({
@@ -43,6 +46,7 @@ const Toast = ({
           toastBacgroundColor,
           toastFontColor = toastFontColorHex,
           toastIcon,
+          iconColor,
           typeOfToast,
           size,
           boxShadow,
@@ -61,56 +65,55 @@ const Toast = ({
           >
             {typeOfToast === "success" ||
               (typeOfToast === undefined && (
-                <FontAwesomeIcon
+                <ToastIcon
                   icon={
                     toastIcon ? ["fas", toastIcon] : ["fas", "circle-check"]
                   }
-                  size="xl"
+                  color={iconColor}
                 />
               ))}
 
             {typeOfToast === "error" && (
-              <FontAwesomeIcon
+              <ToastIcon
                 icon={
                   toastIcon ? ["fas", toastIcon] : ["fas", "circle-exclamation"]
                 }
-                size="xl"
+                color={iconColor}
               />
             )}
 
             {typeOfToast === "warning" && (
-              <FontAwesomeIcon
+              <ToastIcon
                 icon={
                   toastIcon
                     ? ["fas", toastIcon]
                     : ["fas", "triangle-exclamation"]
                 }
-                size="xl"
+                color={iconColor}
               />
             )}
 
             {typeOfToast === "info" && (
-              <FontAwesomeIcon
+              <ToastIcon
                 icon={toastIcon ? ["fas", toastIcon] : ["fas", "circle-info"]}
-                size="xl"
+                color={iconColor}
               />
             )}
 
             <ToastDescriptionContainer>
-              <BasicCloseButton
-                onClick={() => onToastRemove(id)}
-                style={{
-                  position: "absolute",
-                  right: "0",
-                  top: "0",
-                  paddingRight: "7px",
-                }}
-              >
-                &times;
-              </BasicCloseButton>
-              <ToastHeader toastHeader={toastHeader} size={size}>
-                {toastHeader}
-              </ToastHeader>
+              <HeaderContainer>
+                <ToastHeader toastHeader={toastHeader} size={size}>
+                  {toastHeader}
+                </ToastHeader>
+
+                <ToastCloseButton
+                  icon={["fas", "circle-xmark"]}
+                  onClick={() => onToastRemove(id)}
+                  style={{ cursor: "pointer", alignSelf: "baseline" }}
+                  iconSize={size}
+                />
+              </HeaderContainer>
+
               {toastDescription && (
                 <ToastCopy toastDescription={toastDescription} size={size}>
                   {toastDescription}

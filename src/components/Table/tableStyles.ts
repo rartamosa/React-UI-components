@@ -81,8 +81,14 @@ export const ColumnName = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
+  &:first-of-type {
+    justify-self: flex-start;
+  }
 `;
 
 export const TCell = styled.div`
   text-align: right;
+  &:first-of-type {
+    text-align: left;
+  }
 `;

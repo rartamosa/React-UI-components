@@ -21,30 +21,46 @@ export const useDelayUnmount = (
 
 export const determineAnimationType = (
   animationType?: string,
-  toastsPosition?: string
+  toastsPosition?: string,
+  isUnmounting?: boolean
 ): Keyframes => {
-  if (
-    toastsPosition === "bottom-center" ||
-    toastsPosition === "bottom-left" ||
-    toastsPosition === "bottom-right"
-  ) {
-    if (animationType === "fadein") {
+  if (!isUnmounting) {
+    if (animationType === "fade") {
       return fadein;
     } else if (animationType === "grow") {
       return growin;
-    } else if (animationType === "slide") {
+    } else if (
+      (animationType === "slide" && toastsPosition === "bottom-left") ||
+      toastsPosition === "bottom-center" ||
+      toastsPosition === "bottom-right"
+    ) {
       return slidein;
+    } else if (
+      (animationType === "slide" && toastsPosition === "top-left") ||
+      toastsPosition === "top-center" ||
+      toastsPosition === "top-right"
+    ) {
+      return slideinTop;
     }
   } else {
-    if (animationType === "fadein") {
-      return fadein;
+    if (animationType === "fade") {
+      return fadeout;
     } else if (animationType === "grow") {
       return growout;
-    } else if (animationType === "slide") {
+    } else if (
+      (animationType === "slide" && toastsPosition === "top-left") ||
+      toastsPosition === "top-center" ||
+      toastsPosition === "top-right"
+    ) {
+      return slideoutTop;
+    } else if (
+      (animationType === "slide" && toastsPosition === "bottom-left") ||
+      toastsPosition === "bottom-center" ||
+      toastsPosition === "bottom-right"
+    ) {
       return slideout;
     }
   }
-
   return fadein;
 };
 
@@ -55,21 +71,28 @@ export const fadein = keyframes`
 100% { opacity: 1 }
 `;
 
+export const fadeout = keyframes`
+0% { opacity: 1 }
+30% { opacity: 0.7 }
+60% { opacity: 0.4 }
+100% { opacity: 0.1 }
+`;
+
 export const growout = keyframes`
 from {
-    transform: scale(0);
+    transform: scale(1);
   }
   to {
-    transform: scale(1);
+    transform: scale(0);
   }
 `;
 
 export const growin = keyframes`
 from {
-    transform: scale(1);
+    transform: scale(0);
   }
   to {
-    transform: scale(0);
+    transform: scale(1);
   }
 `;
 
@@ -89,4 +112,22 @@ export const slideout = keyframes`
   100% {
     transform: translateY(100%);
   }
+`;
+
+export const slideinTop = keyframes`
+from {
+  transform: translateY(-100%);
+}
+to {
+  transform: translateY(0%);
+}
+`;
+
+export const slideoutTop = keyframes`
+from {
+  transform: translateY(0);
+}
+to {
+  transform: translateY(-100%);
+}
 `;

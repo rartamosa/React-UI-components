@@ -1,13 +1,15 @@
 import styled, { css } from "styled-components";
 import { determineAnimationType } from "./toastAnimations";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export const SingleToast = styled.div<{
   toastBacgroundColor?: string;
   toastFontColor?: string;
   typeOfToast?: "success" | "error" | "warning" | "info";
   size?: "small" | "medium" | "large";
   boxShadow?: boolean;
-  animationType?: "fadein" | "grow" | "slide";
+  animationType?: "fade" | "grow" | "slide";
   animation?: string;
   isUnmounting?: boolean;
   toastsPosition?:
@@ -26,23 +28,24 @@ export const SingleToast = styled.div<{
   gap: 10px;
 
   animation-name: ${(props) =>
-    determineAnimationType(props.animationType, props.toastsPosition)};
+    determineAnimationType(
+      props.animationType,
+      props.toastsPosition,
+      props.isUnmounting
+    )};
   animation-duration: 0.2s;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  ${(props) =>
-    props.isUnmounting &&
-    css`
-      animation-direction: reverse;
-    `}
 
   ${(props) =>
     props.boxShadow &&
     css`
       box-shadow: 3px 3px 10px -1px rgba(51, 51, 51, 1);
     `}
+
   color: ${(props) => props.toastFontColor};
   margin: 0 0 10px 0;
+
   ${(props) =>
     props.typeOfToast === "error" &&
     css`
@@ -50,6 +53,7 @@ export const SingleToast = styled.div<{
         ? props.toastBacgroundColor
         : "#f62e36"};
     `}
+
   ${(props) =>
     props.typeOfToast === "warning" &&
     css`
@@ -57,6 +61,7 @@ export const SingleToast = styled.div<{
         ? props.toastBacgroundColor
         : "#ff9500"};
     `}
+
     ${(props) =>
     props.typeOfToast === "info" &&
     css`
@@ -72,6 +77,7 @@ export const SingleToast = styled.div<{
       font-size: 11px;
       margin-right: 5px;
     `}
+
       ${(props) =>
     props.size === "large" &&
     css`
@@ -79,19 +85,19 @@ export const SingleToast = styled.div<{
     `}
   
       @media (max-width: 768px) {
-    width: 150px;
+    width: 250px;
     font-size: 11px;
     margin-right: 5px;
     ${(props) =>
       props.size === "small" &&
       css`
-        width: 100px;
+        width: 150px;
         font-size: 8px;
       `}
     ${(props) =>
       props.size === "large" &&
       css`
-        width: 200px;
+        width: 90%;
         font-size: 9px;
       `}
   }
@@ -102,6 +108,8 @@ export const ToastDescriptionContainer = styled.div`
   flex-direction: column;
   gap: 5px;
   justify-content: center;
+  position: relative;
+  width: 100%;
 `;
 
 export const ToastHeader = styled.span<{
@@ -109,7 +117,7 @@ export const ToastHeader = styled.span<{
   size?: "small" | "medium" | "large";
 }>`
   font-weight: 700;
-  margin-right: 5px;
+  position: relative;
   ${(props) =>
     props.size === "small" &&
     css`
@@ -127,7 +135,6 @@ export const ToastCopy = styled.span<{
   size?: "small" | "medium" | "large";
 }>`
   font-size: 13px;
-  margin-right: 5px;
   ${(props) =>
     props.size === "small" &&
     css`
@@ -155,6 +162,7 @@ export const ToastContainerDiv = styled.div<{
   height: fit-content;
   display: flex;
   flex-direction: column-reverse;
+  align-items: center;
 
   ${(props) =>
     props.toastsPosition === "bottom-left" &&
@@ -194,4 +202,38 @@ export const ToastContainerDiv = styled.div<{
       margin: 10px 10px 0 0;
       flex-direction: column;
     `}
+    @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const ToastCloseButton = styled(FontAwesomeIcon)<{
+  iconSize?: "small" | "medium" | "large";
+}>`
+  cursor: pointer;
+  align-self: baseline;
+  font-size: 15px;
+  ${(props) =>
+    props.iconSize === "small" &&
+    css`
+      font-size: 15px;
+    `}
+  @media (max-width: 768px) {
+    ${(props) =>
+      props.iconSize === "large" &&
+      css`
+        font-size: 15px;
+      `}
+  }
+`;
+
+export const ToastIcon = styled(FontAwesomeIcon)`
+  font-size: 25px;
 `;

@@ -2,7 +2,7 @@ import { IconName } from "@fortawesome/fontawesome-svg-core";
 
 export type ToastProps = {
   toastList: SingleToastProps[];
-  animationType?: "fadein" | "grow" | "slide";
+  animationType?: "fade" | "grow" | "slide";
   onToastRemove: (id: string) => void;
   toastsPosition?:
     | "bottom-center"
@@ -11,6 +11,7 @@ export type ToastProps = {
     | "top-center"
     | "top-left"
     | "top-right";
+  buttonProps?: React.CSSProperties;
 };
 
 export type ToastToAdd = {
@@ -19,6 +20,7 @@ export type ToastToAdd = {
   toastBacgroundColor?: string;
   toastFontColor?: string;
   toastIcon?: IconName;
+  iconColor?: string;
   typeOfToast?: "success" | "error" | "warning" | "info";
   size?: "small" | "medium" | "large";
   boxShadow?: boolean;

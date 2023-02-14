@@ -114,7 +114,7 @@ const App = () => {
         // actionButtonColor="red"
         // cancelButtonColor="blue"
         // overlayColor="pink"
-        // dialogPosition="right-bottom"
+        // dialogPosition="right-top"
         blockScroll={true}
         closeOnEsc={true}
         closeOnOverlayClick={true}
@@ -126,11 +126,12 @@ const App = () => {
         onClick={() =>
           onToastAdd({
             toastHeader: "Example toast header",
-            // typeOfToast: "error",
+            // typeOfToast: "warning",
             // toastDescription: "Example toast description",
             // size: "large",
             // boxShadow: true,
             // toastIcon: "sun",
+            // iconColor: "red",
             // toastBacgroundColor: "pink",
             // toastFontColor: "black",
           })
@@ -138,11 +139,11 @@ const App = () => {
       >
         Generate toast
       </Button>
-      <Toast //TODO X do zamknięcia toasta pojawia się tylko przy pierwszym toaście
+      <Toast
         toastList={toastList}
         // animationType="slide"
         onToastRemove={onToastRemove}
-        // toastsPosition="top-center"
+        // toastsPosition="top-left"
       />
 
       {/* ACCORDION */}
@@ -151,23 +152,21 @@ const App = () => {
         // iconColor="red"
         // show="many"
         // customIconClosed="sun"
-        // accordionBodyHeight="100px"
+        // accordionBodyHeight="500px"
         // scroll={false}
         // containerBackgroundColor="red"
         // accordionBackgroundColor="pink"
-        // defaultIndex={1} //TODO nie działa dla 0
+        // defaultIndex={0}
         // defaultIndexes={[0, 1]}
       />
 
       {/* TABLE */}
       <Table
-        // mainHeader="Example table main header"
         columnNames={dummyColumnNames}
         tableRows={dummyTableRows}
         // headerBackGroundColor="pink"
         // denseRows={true}
         // iconColor="blue"
-        // footerIconsColor="orange"
         // borderColor="red"
         // borderWidth="10px"
         // allowSorting={false}

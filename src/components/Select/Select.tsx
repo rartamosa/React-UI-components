@@ -45,6 +45,7 @@ const Select = ({
     setSelectedOption(option);
     setSelectedOptionDraft(option);
     setAreSelectOptionsOpen(false);
+    setError(false);
   };
 
   const onSelectClear = (event: React.SyntheticEvent): void => {
@@ -52,6 +53,7 @@ const Select = ({
     const emptyOption = { id: "", name: "" };
     setSelectedOption(emptyOption);
     setSelectedOptionDraft(emptyOption);
+    setError(false);
     if (shouldCloseOnClear) {
       setAreSelectOptionsOpen(false);
     } else {
@@ -69,8 +71,10 @@ const Select = ({
       if (matchingOption) {
         setSelectedOption(selectedOptionDraft);
         setAreSelectOptionsOpen(false);
+        setError(false);
       } else {
         setSelectedOptionDraft(selectedOption);
+        setError(false);
       }
     } else {
       setError(true);
@@ -85,6 +89,7 @@ const Select = ({
       name: event.target.value,
     };
     setSelectedOptionDraft(newOptionDraft);
+    setError(false);
   };
 
   const onSelectOptionsOpen = (event: React.SyntheticEvent): void => {
