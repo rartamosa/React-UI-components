@@ -16,7 +16,7 @@ library.add(fas, faChevronDown);
 
 const Select = ({
   selectOptions,
-  shouldCloseOnClear,
+  shouldCloseOnClear = false,
   placeholder,
   containerBorderColor,
   containerBorderWidth,

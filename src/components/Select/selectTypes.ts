@@ -7,7 +7,7 @@ export type SelectOption = {
 
 export type SelectProps = {
   selectOptions: SelectOption[];
-  shouldCloseOnClear: boolean;
+  shouldCloseOnClear?: boolean;
   placeholder?: string;
   containerBorderColor?: string;
   containerBorderWidth?: string;
