@@ -34,6 +34,13 @@ const BasicContainerError = styled.div<{
   position: absolute;
   border-radius: 8px;
   box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    ${(props) =>
+      props.componentSize === "large" &&
+      css`
+        width: -webkit-fill-available;
+      `}
 `;
 
 export default BasicContainerError;

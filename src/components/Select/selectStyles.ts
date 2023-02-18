@@ -59,4 +59,10 @@ export const Options = styled.ul<{
         line-height: 25px;
       `}
   }
+
+  ${(props) =>
+    props.componentSize === "large" &&
+    css`
+      width: -webkit-fill-available;
+    `}
 `;
