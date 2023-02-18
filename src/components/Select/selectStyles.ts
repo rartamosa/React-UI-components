@@ -20,6 +20,7 @@ export const Options = styled.ul<{
   left: 0;
   top: 43px;
   max-height: 102px;
+  z-index: 1;
   ${(props) =>
     props.componentSize === "small" &&
     css`
