@@ -47,6 +47,14 @@ const BasicContainer = styled.div<{
   overflow-y: scroll;
   border: ${(props) => props.containerBorderWidth || "1px"} solid
     ${(props) => props.containerBorderColor || "#333"};
+
+  @media (max-width: 768px) {
+    ${(props) =>
+      props.componentSize === "large" &&
+      css`
+        width: auto;
+      `}
+  }
 `;
 
 export default BasicContainer;
