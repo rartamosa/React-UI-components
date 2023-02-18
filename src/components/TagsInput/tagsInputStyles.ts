@@ -142,5 +142,10 @@ export const TagsInputContainerSuggestions = styled.div<{
       css`
         top: -99px;
       `}
+    ${(props) =>
+      props.componentSize === "large" &&
+      css`
+        width: auto;
+      `}
   }
 `;
