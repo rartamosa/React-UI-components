@@ -15,6 +15,7 @@ import {
   ColumnNames,
   MAIN_ICON_COLOR,
   MAIN_DARK_FONT_COLOR,
+  MAIN_LIGHT_COLOR,
   TableData,
   Order,
 } from "./TableProps";
@@ -40,6 +41,7 @@ const Table = ({
   borderColor = MAIN_DARK_FONT_COLOR,
   borderWidth = "1px",
   allowSorting = true,
+  hoverColor = MAIN_LIGHT_COLOR,
 }: TableProps) => {
   const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
 
@@ -138,6 +140,7 @@ const Table = ({
               key={uniqid()}
               columnNames={tableColumnNames}
               denseRows={denseRows}
+              hoverColor={hoverColor}
             >
               {row.map((value) => (
                 <TCell key={uniqid()}>{value}</TCell>

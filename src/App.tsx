@@ -169,6 +169,7 @@ const App = () => {
         // iconColor="blue"
         // borderColor="red"
         // borderWidth="10px"
+        // hoverColor="pink"
         // allowSorting={false}
       />
     </>

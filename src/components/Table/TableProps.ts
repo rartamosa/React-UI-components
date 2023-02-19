@@ -7,6 +7,7 @@ export type TableProps = {
   borderColor?: string;
   borderWidth?: string;
   allowSorting?: boolean;
+  hoverColor?: string;
 };
 
 export type TableRequiredData = TableData & {
