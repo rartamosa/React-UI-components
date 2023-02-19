@@ -102,7 +102,6 @@ const App = () => {
         isDialogOpen={isDialogOpen}
         dialogHeader="Delete user"
         dialogBody="Are you sure?"
-        buttonText="Delete user!"
         actionButtonText="Delete"
         cancelButtonText="Cancel"
         buttonProps={{

@@ -12,7 +12,8 @@ export const Overlay = styled.div<{
   isDialogOpen: boolean;
   onEscClose?: (event: React.KeyboardEvent) => void;
 }>`
-  position: absolute;
+  z-index: 5;
+  position: fixed;
   left: 0;
   top: 0;
   right: 0;
