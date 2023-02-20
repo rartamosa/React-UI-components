@@ -37,9 +37,12 @@ const TagInput = ({
   const [error, setError] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    inputRef.current?.scrollIntoView({ inline: "end" });
+    if (containerRef.current && inputRef.current) {
+      containerRef.current.scrollLeft = inputRef.current.offsetLeft;
+    }
   }, [tags]);
 
   useEffect(() => {
@@ -107,6 +110,7 @@ const TagInput = ({
         componentSize={componentSize}
         backgroundColor={backgroundColor}
         isDisabled={isDisabled || false}
+        ref={containerRef}
       >
         {tags.map((tagID) => {
           const currentTag = tagsSuggestions.find(
