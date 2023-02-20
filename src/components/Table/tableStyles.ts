@@ -26,22 +26,23 @@ export const THead = styled.div<{
   headerBackGroundColor?: string;
   columnNames: ColumnNames[];
   columnWidth?: string;
+  firstColumnWidth?: string;
 }>`
   display: grid;
-  grid-template-columns: 100px repeat(
+  grid-template-columns: ${(props) => props.firstColumnWidth} repeat(
       ${(props) => props.columnNames.length - 1},
       ${(props) => props.columnWidth}
     );
   gap: 5px;
-  padding: 6px 0;
+  padding: 6px 10px 6px 0;
   background-color: ${(props) => props.headerBackGroundColor};
   font-weight: 700;
   white-space: nowrap;
   width: fit-content;
   @media (max-width: 768px) {
-    grid-template-columns: 100px repeat(
+    grid-template-columns: ${(props) => props.firstColumnWidth} repeat(
         ${(props) => props.columnNames.length - 1},
-        100px
+        ${(props) => props.columnWidth}
       );
 
     font-size: 14px;
@@ -58,14 +59,15 @@ export const TRow = styled.div<{
   denseRows?: boolean;
   hoverColor?: string;
   columnWidth?: string;
+  firstColumnWidth?: string;
 }>`
   display: grid;
-  grid-template-columns: 100px repeat(
+  grid-template-columns: ${(props) => props.firstColumnWidth} repeat(
       ${(props) => props.columnNames.length - 1},
       ${(props) => props.columnWidth}
     );
   gap: 5px;
-  padding: ${(props) => (props.denseRows ? "0" : "6px 0")};
+  padding: ${(props) => (props.denseRows ? "0" : "6px 10px 6px 0;")};
   border-bottom: 1px solid #333;
   width: fit-content;
   align-items: center;
@@ -77,9 +79,9 @@ export const TRow = styled.div<{
     background-color: ${(props) => props.hoverColor};
   }
   @media (max-width: 768px) {
-    grid-template-columns: 100px repeat(
+    grid-template-columns: ${(props) => props.firstColumnWidth} repeat(
         ${(props) => props.columnNames.length - 1},
-        100px
+        ${(props) => props.columnWidth}
       );
 
     font-size: 13px;
@@ -98,8 +100,5 @@ export const ColumnName = styled.div`
 `;
 
 export const TCell = styled.div`
-  text-align: right;
-  &:first-of-type {
-    text-align: left;
-  }
+  text-align: left;
 `;

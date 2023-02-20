@@ -9,6 +9,7 @@ export type TableProps = {
   allowSorting?: boolean;
   hoverColor?: string;
   columnWidth?: string;
+  firstColumnWidth?: string;
 };
 
 export type TableRequiredData = TableData & {

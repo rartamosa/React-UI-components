@@ -43,6 +43,7 @@ const Table = ({
   allowSorting = true,
   hoverColor = MAIN_LIGHT_COLOR,
   columnWidth = "100px",
+  firstColumnWidth = "200px",
 }: TableProps) => {
   const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
 
@@ -113,6 +114,7 @@ const Table = ({
           headerBackGroundColor={headerBackGroundColor}
           columnNames={tableColumnNames}
           columnWidth={columnWidth}
+          firstColumnWidth={firstColumnWidth}
         >
           {tableColumnNames.map((cell, index) => (
             <ColumnName key={cell.id}>
@@ -144,6 +146,7 @@ const Table = ({
               denseRows={denseRows}
               hoverColor={hoverColor}
               columnWidth={columnWidth}
+              firstColumnWidth={firstColumnWidth}
             >
               {row.map((value) => (
                 <TCell key={uniqid()}>{value}</TCell>
