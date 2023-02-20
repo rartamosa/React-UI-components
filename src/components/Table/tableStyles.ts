@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ColumnNames, MAIN_LIGHT_COLOR } from "./TableProps";
+import { ColumnNames } from "./TableProps";
 
 export const TOverflow = styled.div<{
   borderColor?: string;
@@ -25,11 +25,12 @@ export const TContainer = styled.div`
 export const THead = styled.div<{
   headerBackGroundColor?: string;
   columnNames: ColumnNames[];
+  columnWidth?: string;
 }>`
   display: grid;
   grid-template-columns: 100px repeat(
       ${(props) => props.columnNames.length - 1},
-      1fr
+      ${(props) => props.columnWidth}
     );
   gap: 5px;
   padding: 6px 0;
@@ -40,7 +41,7 @@ export const THead = styled.div<{
   @media (max-width: 768px) {
     grid-template-columns: 100px repeat(
         ${(props) => props.columnNames.length - 1},
-        1fr
+        100px
       );
 
     font-size: 14px;
@@ -49,7 +50,6 @@ export const THead = styled.div<{
 `;
 
 export const TBody = styled.div`
-  overflow-x: auto;
   height: 200px;
 `;
 
@@ -57,15 +57,17 @@ export const TRow = styled.div<{
   columnNames: ColumnNames[];
   denseRows?: boolean;
   hoverColor?: string;
+  columnWidth?: string;
 }>`
   display: grid;
   grid-template-columns: 100px repeat(
       ${(props) => props.columnNames.length - 1},
-      1fr
+      ${(props) => props.columnWidth}
     );
   gap: 5px;
   padding: ${(props) => (props.denseRows ? "0" : "6px 0")};
   border-bottom: 1px solid #333;
+  width: fit-content;
   align-items: center;
 
   &:last-of-type {
@@ -77,7 +79,7 @@ export const TRow = styled.div<{
   @media (max-width: 768px) {
     grid-template-columns: 100px repeat(
         ${(props) => props.columnNames.length - 1},
-        1fr
+        100px
       );
 
     font-size: 13px;

@@ -8,6 +8,7 @@ export type TableProps = {
   borderWidth?: string;
   allowSorting?: boolean;
   hoverColor?: string;
+  columnWidth?: string;
 };
 
 export type TableRequiredData = TableData & {
