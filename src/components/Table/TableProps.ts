@@ -10,6 +10,7 @@ export type TableProps = {
   hoverColor?: string;
   columnWidth?: string;
   firstColumnWidth?: string;
+  stickyHeader?: boolean;
 };
 
 export type TableRequiredData = TableData & {

@@ -44,6 +44,7 @@ const Table = ({
   hoverColor = MAIN_LIGHT_COLOR,
   columnWidth = "100px",
   firstColumnWidth = "200px",
+  stickyHeader = true,
 }: TableProps) => {
   const [tableRowsData, setTableRowsData] = useState<(string | number)[][]>([]);
 
@@ -115,6 +116,7 @@ const Table = ({
           columnNames={tableColumnNames}
           columnWidth={columnWidth}
           firstColumnWidth={firstColumnWidth}
+          stickyHeader={stickyHeader}
         >
           {tableColumnNames.map((cell, index) => (
             <ColumnName key={cell.id}>

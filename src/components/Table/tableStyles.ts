@@ -27,6 +27,7 @@ export const THead = styled.div<{
   columnNames: ColumnNames[];
   columnWidth?: string;
   firstColumnWidth?: string;
+  stickyHeader?: boolean;
 }>`
   display: grid;
   grid-template-columns: ${(props) => props.firstColumnWidth} repeat(
@@ -39,12 +40,13 @@ export const THead = styled.div<{
   font-weight: 700;
   white-space: nowrap;
   width: fit-content;
+  position: ${(props) => (props.stickyHeader ? "sticky" : "unset")};
+  top: 0;
   @media (max-width: 768px) {
     grid-template-columns: ${(props) => props.firstColumnWidth} repeat(
         ${(props) => props.columnNames.length - 1},
         ${(props) => props.columnWidth}
       );
-
     font-size: 14px;
     font-size: 11px;
   }
