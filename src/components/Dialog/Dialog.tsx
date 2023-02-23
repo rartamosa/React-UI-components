@@ -21,11 +21,11 @@ const Dialog = ({
   cancelButtonColor,
   actionButtonText,
   cancelButtonText,
-  overlayColor,
+  overlayColor = "rgba(0, 0, 0, 0.3)",
   dialogPosition,
-  blockScroll,
-  closeOnEsc,
-  closeOnOverlayClick,
+  blockScroll = false,
+  closeOnEsc = false,
+  closeOnOverlayClick = false,
 }: DialogProps) => {
   useEffect(() => {
     if (blockScroll && isDialogOpen) {
