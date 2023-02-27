@@ -163,6 +163,7 @@ export const ToastContainerDiv = styled.div<{
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
+  z-index: 1;
 
   ${(props) =>
     props.toastsPosition === "bottom-left" &&
