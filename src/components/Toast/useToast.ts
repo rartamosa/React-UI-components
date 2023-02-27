@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 // @ts-ignore
 import uniqid from "uniqid";
 
@@ -13,15 +13,6 @@ const useToast = (
 ] => {
   const [toastList, setToastList] = useState<SingleToastProps[]>([]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (toastList.length) {
-        onToastRemove(toastList[0].id);
-      }
-    }, timeout);
-    return () => clearInterval(intervalId);
-  }, [toastList, timeout]);
-
   const onToastAdd = (toastToAdd: ToastToAdd): void => {
     setToastList([
       ...toastList,
@@ -32,21 +23,33 @@ const useToast = (
     ]);
   };
 
-  const onToastRemove = (id: string): void => {
-    setToastList(
-      toastList.map((item) => {
-        if (item.id === id) {
-          return { ...item, isUnmounting: true };
-        } else {
-          return item;
-        }
-      })
-    );
-    setTimeout(() => {
-      const updatedToastList = toastList.filter((toast) => toast.id !== id);
-      setToastList(updatedToastList);
-    }, 200);
-  };
+  const onToastRemove = useCallback(
+    (id: string): void => {
+      setToastList(
+        toastList.map((item) => {
+          if (item.id === id) {
+            return { ...item, isUnmounting: true };
+          } else {
+            return item;
+          }
+        })
+      );
+      setTimeout(() => {
+        const updatedToastList = toastList.filter((toast) => toast.id !== id);
+        setToastList(updatedToastList);
+      }, 200);
+    },
+    [toastList]
+  );
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (toastList.length) {
+        onToastRemove(toastList[0].id);
+      }
+    }, timeout);
+    return () => clearInterval(intervalId);
+  }, [toastList, timeout, onToastRemove]);
 
   return [toastList, onToastAdd, onToastRemove];
 };

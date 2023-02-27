@@ -156,14 +156,14 @@ export const ToastContainerDiv = styled.div<{
     | "top-left"
     | "top-right";
 }>`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: fit-content;
   height: fit-content;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  z-index: 1;
+  z-index: 99;
 
   ${(props) =>
     props.toastsPosition === "bottom-left" &&
