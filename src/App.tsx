@@ -149,8 +149,8 @@ const App = () => {
       <Accordion
         accordionBody={accordionDummyData}
         // iconColor="red"
-        // show="many"
         // customIconClosed="sun"
+        // show="many"
         // accordionBodyHeight="500px"
         // scroll={false}
         // containerBackgroundColor="red"
