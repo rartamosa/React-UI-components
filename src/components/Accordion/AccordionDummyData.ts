@@ -1,4 +1,3 @@
-// @ts-ignore
 import uniqid from "uniqid";
 
 import { AccordionData } from "./AccordionProps";

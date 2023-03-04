@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// @ts-ignore
 import uniqid from "uniqid";
 
 import {

@@ -14,7 +14,6 @@ import {
 const TagInput = ({
   tags,
   onTagAdd,
-  // eslint-disable-next-line
   tagsSuggestions,
   onTagRemove,
   containerBorderColor,
